@@ -88,12 +88,12 @@ export default function LovePage() {
       // --- LOGIKA PESAN SEMANGAT DI SINI ---
       if (nextMove > 0 && nextMove % 5 === 0) {
         const messages = [
-          "Semangat Sayang! ❤️", 
-          "Kamu Pasti Bisa! 😘", 
-          "Dikit Lagi Ketemu! 🌹", 
-          "Good Job Babe! 💕", 
-          "Ayo Terus Cantik! 🥰",
-          "Jangan Nyerah Ya! 🌻"
+          "Semangat bebeeeb! ❤️", 
+          "Kamu pasti Bisa! 😘", 
+          "Dikit lagi ketemu tuh! 🌹", 
+          "Good job bebeeh! 💕", 
+          "Ayo dikit lagi cantik! 🥰",
+          "Jangan menyeraah! 🌻"
         ];
         const randomMsg = messages[Math.floor(Math.random() * messages.length)];
         setFloatingMessage(randomMsg);
