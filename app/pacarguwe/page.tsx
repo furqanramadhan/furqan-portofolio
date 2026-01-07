@@ -28,6 +28,9 @@ export default function LovePage() {
   const [moves, setMoves] = useState(0);
   const [isProcessing, setIsProcessing] = useState(false);
   
+  // STATE BARU: Pesan Semangat
+  const [floatingMessage, setFloatingMessage] = useState<string | null>(null);
+  
   // Reasons State
   const [reasons, setReasons] = useState<Reason[]>([
     { id: 1, title: "Your Smile", description: "It brightens up my darkest days instantly.", isRevealed: false },
@@ -37,7 +40,6 @@ export default function LovePage() {
     { id: 5, title: "Just You", description: "I love everything about you, simply because it's you.", isRevealed: false },
   ]);
 
-  // REF AUDIO (Untuk kontrol musik)
   const audioRef = useRef<HTMLAudioElement>(null);
   
   // --- GAME LOGIC ---
@@ -60,6 +62,7 @@ export default function LovePage() {
     setCards(deck);
     setMoves(0);
     setFlippedCards([]);
+    setFloatingMessage(null); // Reset pesan saat game baru
   };
 
   const handleCardClick = (id: number) => {
@@ -77,7 +80,28 @@ export default function LovePage() {
 
     if (newFlipped.length === 2) {
       setIsProcessing(true);
-      setMoves(prev => prev + 1);
+      
+      // Update Moves & Cek Kelipatan 5
+      const nextMove = moves + 1;
+      setMoves(nextMove);
+
+      // --- LOGIKA PESAN SEMANGAT DI SINI ---
+      if (nextMove > 0 && nextMove % 5 === 0) {
+        const messages = [
+          "Semangat Sayang! ❤️", 
+          "Kamu Pasti Bisa! 😘", 
+          "Dikit Lagi Ketemu! 🌹", 
+          "Good Job Babe! 💕", 
+          "Ayo Terus Cantik! 🥰",
+          "Jangan Nyerah Ya! 🌻"
+        ];
+        const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+        setFloatingMessage(randomMsg);
+        
+        // Hilangkan pesan setelah 2 detik
+        setTimeout(() => setFloatingMessage(null), 2000);
+      }
+
       checkForMatch(newFlipped, newCards);
     }
   };
@@ -119,8 +143,20 @@ export default function LovePage() {
 
   // --- RENDER HELPERS ---
   return (
-    <main className="min-h-screen bg-gradient-to-br from-pink-100 to-rose-200 flex items-center justify-center p-4 font-sans text-slate-800">
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 max-w-lg w-full transition-all duration-500 min-h-[500px] flex flex-col justify-center items-center text-center border border-white/50">
+    <main className="min-h-screen bg-gradient-to-br from-pink-100 to-rose-200 flex items-center justify-center p-4 font-sans text-slate-800 relative overflow-hidden">
+      
+      {/* BACKGROUND FLOATING BUBBLE (PESAN SEMANGAT) */}
+      {floatingMessage && (
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[200%] z-50 pointer-events-none animate-bounce">
+          <div className="bg-rose-500 text-white px-6 py-3 rounded-full shadow-2xl text-lg font-bold border-4 border-pink-200 flex items-center gap-2">
+            <span>📣</span> {floatingMessage}
+          </div>
+          {/* Segitiga bubble di bawah */}
+          <div className="w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[10px] border-t-rose-500 mx-auto"></div>
+        </div>
+      )}
+
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 max-w-lg w-full transition-all duration-500 min-h-[500px] flex flex-col justify-center items-center text-center border border-white/50 relative z-10">
         
         {/* STAGE 1: WELCOME */}
         {stage === 'welcome' && (
@@ -133,9 +169,8 @@ export default function LovePage() {
             <button 
               onClick={() => {
                 setStage('game');
-                // --- LOGIKA MUSIK DITAMBAHKAN DI SINI ---
                 if (audioRef.current) {
-                  audioRef.current.volume = 0.1; // Volume 10% (Kecil/Samar)
+                  audioRef.current.volume = 0.1; 
                   audioRef.current.play().catch(e => console.log("Audio play failed:", e));
                 }
               }}
@@ -271,8 +306,6 @@ export default function LovePage() {
 
       </div>
 
-      {/* --- ELEMENT AUDIO TERSEMBUNYI --- */}
-      {/* Pastikan file backsound.mp3 sudah ada di folder public */}
       <audio ref={audioRef} loop>
         <source src="/backsound.mp3" type="audio/mpeg" />
       </audio>
