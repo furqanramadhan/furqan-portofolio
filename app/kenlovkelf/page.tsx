@@ -183,12 +183,12 @@ export default function ValentinePage() {
                             <div className="w-full md:w-1/2 flex flex-col justify-center text-left font-serif italic">
                                 <h1 className="text-4xl md:text-5xl font-bold text-[#8b0000] mb-6 leading-tight">Happy Valentine <br/> My Sweetheart</h1>
                                 <p className="text-gray-600 mb-4 text-sm text-justify">
-                                    Dear My Beautiful Kenarasti, <br /><br />
+                                    Dear my beauty Kenarasti, <br /><br />
                                     Honestly, I’ve been sitting here for a while trying to figure out how to start this. Writing letters isn’t exactly something I’m used to, so I’m sorry if this comes across as a bit awkward or "weird." It’s just much easier for me to feel these things than it is to put them into words. <br /><br />
                                     When I look back at everything we’ve shared, I realize how much you’ve changed my life for the better. Thank you for being the person who makes everything better just by being there. The way you understand me and the way you care for us is something I never take for granted. You have this incredible way of making even the smallest moments feel like something I’ll want to remember forever. <br /><br />
                                     You are my favorite person, and I’m so lucky to have you by my side. I might not always have the perfect words, but I hope you always know how much you mean to me.<br /><br />
                                     I love you more than words can ever truly express.</p>
-                                <p className="font-bold text-[#8b0000]">Always yours, Kelfino</p>
+                                <p className="font-bold text-[#8b0000]">With all my love, Farelino Kelfin</p>
                                 <button onClick={() => setStage(35)} className="mt-10 text-xs font-bold text-gray-400 uppercase tracking-widest border-gray-300 hover:text-red-500 transition-colors">click this to see more →</button>
                             </div>
                         </div>
