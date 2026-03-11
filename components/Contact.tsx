@@ -70,15 +70,15 @@ export default function Contact() {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <label className="block mb-2 font-semibold text-white">Full Name</label>
-                            <input type="text" name="name" className="w-full p-4 bg-[#2a2a2a]/70 border border-white/10 rounded-lg text-white focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all" required placeholder="Farelino Kelfino"/>
+                            <input type="text" name="name" className="w-full p-4 bg-[#2a2a2a]/70 border border-white/10 rounded-lg text-white focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all" required placeholder="(ex. Farelino Kelfino)"/>
                         </div>
                         <div>
                             <label className="block mb-2 font-semibold text-white">Email Address</label>
-                            <input type="email" name="email" className="w-full p-4 bg-[#2a2a2a]/70 border border-white/10 rounded-lg text-white focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all" required placeholder="kelfino@example.com"/>
+                            <input type="email" name="email" className="w-full p-4 bg-[#2a2a2a]/70 border border-white/10 rounded-lg text-white focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all" required placeholder="(ex. hello@kelfino.my.id)"/>
                         </div>
                         <div>
                             <label className="block mb-2 font-semibold text-white">Message</label>
-                            <textarea name="message" className="w-full p-4 bg-[#2a2a2a]/70 border border-white/10 rounded-lg text-white focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all min-h-[150px]" required placeholder="Hello Kelfino..."></textarea>
+                            <textarea name="message" className="w-full p-4 bg-[#2a2a2a]/70 border border-white/10 rounded-lg text-white focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all min-h-[150px]" required placeholder="(ex. Hello Kelfino...)"></textarea>
                         </div>
 
                         <button 
