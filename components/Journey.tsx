@@ -5,6 +5,7 @@ export default function Journey() {
     { year: '2021-2024', title: 'SMA N 2 SLEMAN YOUTUBE', role: 'Content Manager', desc: 'Manage video production for official events.', img: 'banner3.png', logo: 'logo3.jpg' },
     { year: '2023', title: 'HUT RI-78 Kapanewon Sleman', role: 'Event Documenter', desc: 'Executed official event coverage.', img: 'banner4.png', logo: 'logo4.jpg' },
     { year: '2025 - Current', title: 'SaaSina.com', role: 'Chief Marketing Officer', desc: 'Formulated go-to-market strategies.', img: 'banner5.png', logo: 'logo5.jpg' },
+    { year: '2025 - Current', title: 'AIESEC in UPNVY', role: 'Intern in Outgoing Global Volunteer', desc: 'Maintaining international exchange programs.', img: 'banner6.jpeg', logo: 'logo6.jpg' },
   ];
 
   return (

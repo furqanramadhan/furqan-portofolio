@@ -21,13 +21,13 @@ const projectsData = [
         linkCode: 'https://github.com/kelfinofarelino/donoxygen-website',
     },
     {
-        id: 'BMS',
-        title: 'Bakery Management System',
+        id: 'Jeruk Manis Media Website',
+        title: 'Jeruk Manis Media Website',
         role: 'UI/UX, Front End, Back End',
         img: '/assets/image/project3.jpg',
-        desc: 'A SaaS platform to streamline bakery operations and boost sales.',
-        tech: ['HTML', 'CSS', 'JS', 'Bootstrap', 'PHP'],
-        linkCode: 'https://github.com/kelfinofarelino/bakery-management-system',
+        desc: 'A community platform for managing and promoting local media content.',
+        tech: ['React', 'Tailwind CSS', 'Node.js'],
+        linkCode: 'https://jerukmanis.web.id',
     }
 ];
 
