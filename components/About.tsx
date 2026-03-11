@@ -34,7 +34,7 @@ export default function About() {
                 
                 <div className="relative z-10">
                     <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                        <i className="fas fa-user-astronaut text-brand-red"></i> Leveling Up in Tech ᗧ•••👻
+                        Leveling Up in Tech ᗧ•••👻
                     </h3>
                     <p className="text-brand-gray leading-relaxed text-lg">
                         Hi, I'm <span className="text-white font-semibold">Farelino Kelfin</span>. A Computer Science student based in Yogyakarta, with a passion for growth.
