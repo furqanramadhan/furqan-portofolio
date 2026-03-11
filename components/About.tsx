@@ -37,7 +37,7 @@ export default function About() {
                         Leveling Up in Tech ᗧ•••👻
                     </h3>
                     <p className="text-brand-gray leading-relaxed text-lg">
-                        Hi, I'm <span className="text-white font-semibold">Farelino Kelfin</span>. A Computer Science student based in Yogyakarta, with a passion for growth.
+                        Hi, I'm <span className="text-white font-semibold">Farelino Kelfin</span>. A Computer Science student from Indonesia, with a passion for growth.
                         <br/><br/>
                         I specialize in building <span className="text-white">modern web applications</span> with a focus on smooth interactions (like this website!) and robust backend systems. Currently exploring the world of AI & Data Analytics.
                     </p>
