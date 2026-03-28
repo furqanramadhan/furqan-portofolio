@@ -5,7 +5,7 @@ export default function BebebaiPage() {
       <iframe
         src="https://bebeb-weatherai.streamlit.app/?embed=true"
         style={{ width: '100%', height: '100%', border: 'none' }}
-        title="Kenar's Sky Guardian"
+        title="Sky Guardian for Kenar"
       />
     </div>
   );
