@@ -28,6 +28,15 @@ const projectsData = [
         desc: 'A community platform for managing and promoting local media content.',
         tech: ['React', 'Tailwind CSS', 'Node.js'],
         linkCode: 'https://jerukmanis.web.id',
+    },
+    {
+    id: 'kenars-sky-guardian',
+    title: 'Yogyakarta Weather Intelligence Pipeline',
+    role: 'Data Engineer, Backend, AI Integration',
+    img: '/assets/image/project4.png',
+    desc: 'An automated end-to-end data pipeline that monitors real-time weather telemetry for specific transit routes. Integrated with Gemini 3 Flash for AI-driven safety recommendations and GitHub Actions for 24/7 autonomous monitoring.',
+    tech: ['Python', 'Streamlit', 'Supabase', 'Gemini AI', 'GitHub Actions'],
+    linkCode: 'https://github.com/kelfinofarelino/diy-weather-pipeline',
     }
 ];
 
