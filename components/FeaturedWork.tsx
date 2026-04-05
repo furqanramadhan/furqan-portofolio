@@ -37,6 +37,24 @@ const projectsData = [
     desc: 'An automated end-to-end data pipeline that monitors real-time weather telemetry for specific transit routes. Integrated with Gemini 3 Flash for AI-driven safety recommendations and GitHub Actions for 24/7 autonomous monitoring.',
     tech: ['Python', 'Streamlit', 'Supabase', 'Gemini AI', 'GitHub Actions'],
     linkCode: 'https://github.com/kelfinofarelino/diy-weather-pipeline',
+    },
+    {
+    id: 'Touchless Interface Python',
+    title: 'Touchless Interface (Computer Vision)',
+    role: 'Computer Vision, Software Engineer',
+    img: '/assets/image/project5.png',
+    desc: 'An innovative project using OpenCV and MediaPipe to control computer interfaces through hand gestures, enabling a touchless user experience.',
+    tech: ['Python', 'OpenCV', 'MediaPipe', 'PyAutoGUI'],
+    linkCode: 'https://github.com/kelfinofarelino/Touchless-Interface-Py',
+    },
+    {
+    id: 'Monkey Meme Gesture Cam',
+    title: 'Monkey Meme Gesture Cam',
+    role: 'Computer Vision Engineer, Python Developer',
+    img: '/assets/image/project6.png',
+    desc: 'An interactive application using MediaPipe and OpenCV to detect hand and facial gestures in real-time, instantly matching them with iconic monkey meme reactions.',
+    tech: ['Python', 'OpenCV', 'MediaPipe', 'NumPy'],
+    linkCode: 'https://github.com/kelfinofarelino/monkey-meme-gesture-cam',
     }
 ];
 
@@ -61,7 +79,7 @@ export default function FeaturedWork() {
         
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 animate-on-scroll gap-4">
             <h2 className="text-4xl md:text-5xl font-extrabold relative inline-block after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-[60px] after:h-1 after:bg-gradient-to-r after:from-brand-red after:to-brand-light-red">
-                FEATURED WORK
+                PROJECT PORTFOLIO
             </h2>
             
             <a 
