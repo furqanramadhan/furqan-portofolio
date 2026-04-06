@@ -73,7 +73,7 @@ export default function Home() {
             </p>
 
             <div className="flex flex-wrap gap-4 mb-12 justify-center lg:justify-start">
-                {['UI/UX Designer', 'Full Stack Developer', 'Content Creator', 'Digital Marketer', 'Data Analyst', 'Strategist'].map((role) => (
+                {['UI/UX Designer', 'Full Stack Developer', 'Content Creator', 'Data Engineer', 'Data Analyst', 'Strategist'].map((role) => (
                     <span key={role} className="bg-[#2a2a2a]/70 text-brand-light-gray px-5 py-2.5 rounded-full text-sm font-semibold border border-white/5 hover:bg-brand-red hover:text-white hover:-translate-y-1 transition-all cursor-default">
                         {role}
                     </span>
