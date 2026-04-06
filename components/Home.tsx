@@ -7,8 +7,7 @@ const roles = [
   "KELFINO.",
   "A FULL STACK DEV.",
   "A DATA ANALYST.",
-  "A UI/UX DESIGNER.",
-  "A DIGITAL MARKETER.",
+  "A DATA ENGINEER.",
   "A CONTENT CREATOR.",
   "A PROBLEM SOLVER."
 ];
