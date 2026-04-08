@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     // Background Merah Solid ala Album RED (Taylor's Version)
-    <main className="min-h-screen bg-[#8b0000] flex flex-col items-center justify-center p-6 overflow-hidden relative">
+    <main className="min-h-screen bg-[#cc2121] flex flex-col items-center justify-center p-6 overflow-hidden relative">
       
       {/* 1. DEKORASI SWIFTIE (Confetti Bintang & Love) */}
       <div className="absolute inset-0 pointer-events-none">

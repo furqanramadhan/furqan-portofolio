@@ -59,7 +59,7 @@ export default function Quest() {
   }, [playKeyedAudio, currentKey]);
 
   return (
-    <main className="min-h-screen bg-[#bd0000] relative overflow-hidden flex flex-col items-center justify-center">
+    <main className="min-h-screen bg-[#cc2121] relative overflow-hidden flex flex-col items-center justify-center">
       
       {/* Teks Instruksi Tipis di Atas */}
       <div className="absolute top-10 z-50 text-center pointer-events-none">
