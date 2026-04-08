@@ -68,7 +68,7 @@ const DEFAULTS = {
   maxVerticalRotationDeg: 5,
   dragSensitivity: 20,
   enlargeTransitionMs: 300,
-  segments: 45
+  segments: 34
 };
 
 const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
@@ -706,11 +706,11 @@ export default function DomeGallery({
     // Add romantic labels
     const labelLeft = document.createElement('div');
     labelLeft.className = 'romantic-label label-left font-playfair';
-    labelLeft.innerText = 'My';
+    labelLeft.innerText = 'Everything';
 
     const labelRight = document.createElement('div');
     labelRight.className = 'romantic-label label-right font-playfair';
-    labelRight.innerText = 'Everything';
+    labelRight.innerText = 'My';
 
     viewerRef.current?.appendChild(labelLeft);
     viewerRef.current?.appendChild(labelRight);
@@ -815,7 +815,10 @@ export default function DomeGallery({
       cursor: pointer;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      transition: transform 300ms;
+      
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      
+      transition: transform 300ms, box-shadow 300ms;
       pointer-events: auto;
       -webkit-transform: translateZ(0);
       transform: translateZ(0);
@@ -828,43 +831,46 @@ export default function DomeGallery({
 
     .romantic-label {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
       color: white;
-      font-size: 3rem;
+      font-family: 'Playfair Display', 'Georgia', serif; 
+      font-size: 3.5rem;
+      font-style: italic;
       opacity: 0;
-      transition: all 500ms ease-out;
+      transition: all 600ms cubic-bezier(0.16, 1, 0.3, 1); /* Transisi lebih smooth */
       z-index: 40;
       pointer-events: none;
-      text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+      text-shadow: 0 10px 20px rgba(0,0,0,0.5);
     }
 
     .label-left {
       left: 5%;
-      transform: translateY(-50%) translateX(-20px);
+      bottom: 15%;
+      top: auto;
+      transform: translateX(-35px);
     }
 
     .label-right {
       right: 5%;
-      transform: translateY(-50%) translateX(20px);
+      top: 15%;    /* Kita pakai top biar dia di atas */
+      bottom: auto; /* Reset bottom-nya */
+      transform: translateX(30px);
     }
 
     @media (max-width: 768px) {
       .romantic-label {
-        font-size: 2.2rem;
-        left: 0;
-        right: 0;
+        font-size: 2rem;
         text-align: center;
         width: 100%;
+        left: 0;
+        right: 0;
       }
       .label-left {
-        top: 12%;
-        transform: translateY(-20px);
+        bottom: 20%;
+        transform: translateY(20px);
       }
       .label-right {
-        top: auto;
-        bottom: 12%;
-        transform: translateY(20px);
+        top: 20%;
+        transform: translateY(-20px);
       }
     }
   `;

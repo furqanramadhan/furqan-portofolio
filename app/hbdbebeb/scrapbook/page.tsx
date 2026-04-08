@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ArrowDown, Disc3, ArrowUpFromLine, PlayCircle, Star, Ticket, Coffee, Heart, Moon } from 'lucide-react';
 import { useAudio } from '../AudioProvider'; 
+import confetti from 'canvas-confetti';
 
 const ratings = [
   { 
@@ -72,6 +73,39 @@ const vouchers = [
     code: "KELFIN-BELUM-TIDUR"
   }
 ];
+
+const handleSurprise = () => {
+  const duration = 5 * 1000;
+  const animationEnd = Date.now() + duration;
+  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+  const randomInRange = (min: number, max: number) => 
+  Math.random() * (max - min) + min;
+
+  const interval = setInterval(function() {
+    const timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+
+    const particleCount = 50 * (timeLeft / duration);
+    
+    // Hujan bunga dari kiri dan kanan atas
+    confetti({
+      ...defaults,
+      particleCount,
+      origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+      colors: ['#ff0000', '#ffa500', '#ffffff'], // Merah, Oranye, Putih ala album Red
+    });
+    confetti({
+      ...defaults,
+      particleCount,
+      origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+      colors: ['#ff0000', '#ffa500', '#ffffff'],
+    });
+  }, 250);
+};
 
 // --- DATA KOLEKSI KASET ---
 const cassetteCollection = [
@@ -635,33 +669,38 @@ export default function RedScrapbook() {
         </motion.p>
       </section>
 
-      {/* 5. Ending Section */}
       <section className="relative h-screen w-full flex items-center justify-center snap-start z-10 text-center p-6">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="max-w-4xl"
-        >
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold italic tracking-tighter leading-[1.1] text-transparent bg-clip-text bg-gradient-to-br from-romantic-50 to-white">
-            wish you the happiest<br/>birthday with me
-          </h2>
-          <motion.div 
-            className="mt-12 w-2 h-24 bg-white/30 mx-auto"
-            initial={{ height: 0 }}
-            whileInView={{ height: 96 }}
-            transition={{ duration: 1, delay: 0.5 }}
-          />
-          <motion.h2
-        initial={{ opacity: 0, y: 20 }} // Mulai dari transparan dan agak ke bawah
-        animate={{ opacity: 1, y: 0 }}  // Menuju terlihat dan posisi asli
-        transition={{ duration: 2, delay: 2 }}
-        className="text-4xl md:text-6xl lg:text-7xl font-bold italic tracking-tighter leading-[1.1] text-transparent bg-clip-text bg-gradient-to-br from-romantic-50 to-white mt-9"
-        >
-        cantikku!
-        </motion.h2>
-        </motion.div>
-      </section>
+  <motion.div
+    initial={{ opacity: 0, scale: 0.9 }}
+    whileInView={{ 
+      opacity: 1, 
+      scale: 1,
+    }}
+    onViewportEnter={handleSurprise} // <--- TRIGER SURPRISE DI SINI
+    viewport={{ once: true, amount: 0.5 }}
+    className="max-w-4xl"
+  >
+    <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold italic tracking-tighter leading-[1.1] text-transparent bg-clip-text bg-gradient-to-br from-romantic-50 to-white">
+      wish you the happiest<br/>birthday with me
+    </h2>
+    
+    <motion.div 
+      className="mt-12 w-2 h-24 bg-white/30 mx-auto"
+      initial={{ height: 0 }}
+      whileInView={{ height: 96 }}
+      transition={{ duration: 1, delay: 0.5 }}
+    />
+
+    <motion.h2
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 2, delay: 2 }}
+      className="text-4xl md:text-6xl lg:text-7xl font-bold italic tracking-tighter leading-[1.1] text-transparent bg-clip-text bg-gradient-to-br from-romantic-50 to-white mt-9"
+    >
+      cantikku!
+    </motion.h2>
+  </motion.div>
+</section>
 
     </main>
   );
