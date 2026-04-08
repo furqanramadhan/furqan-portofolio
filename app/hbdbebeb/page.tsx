@@ -47,7 +47,7 @@ export default function Home() {
             animate={{ y: 0, opacity: 1 }}
             className="font-mono text-[10px] uppercase text-white/70 tracking-[0.4em] mb-2"
           >
-            only for cantikku
+            special release
           </motion.p>
           
           <h1 className="text-6xl md:text-8xl font-serif font-bold text-white tracking-tighter italic">
@@ -66,7 +66,7 @@ export default function Home() {
           transition={{ type: "spring", stiffness: 200 }}
         >
           {/* Polaroid Frame */}
-          <div className="bg-white p-4 pb-16 shadow-[0_20px_50px_rgba(0,0,0,0.3)] w-72 md:w-80 mx-auto">
+          <div className="bg-white p-4 pb-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)] w-72 md:w-80 mx-auto">
             <div className="relative aspect-square w-full overflow-hidden bg-gray-200">
               <Image 
                 src="/assets/cover.jpeg" 
@@ -77,29 +77,29 @@ export default function Home() {
               />
             </div>
             {/* Tulisan Tangan di bawah Polaroid */}
-            <p className="text-black font-serif italic text-2xl mt-4 text-center">
-              "Finally 21!"
+            <p className="text-black font-serif italic text-lg mt-4 text-center">
+              "It's supposed to be fun <span className="underline decoration-red/50"><br></br>turning 21!</span>"
             </p>
           </div>
 
           {/* Badge Lucu: Scarf Merah (Ciri khas lagu All Too Well) */}
           <motion.div 
-            className="absolute -bottom-6 -right-6 bg-[#ff0000] text-white px-4 py-2 rounded-full font-bold text-xs shadow-lg border-2 border-white rotate-12"
+            className="absolute -bottom-6 -right-3 bg-[#ff0000] text-white px-4 py-2 rounded-full font-bold text-xs shadow-lg border-2 border-white rotate-12"
             whileHover={{ scale: 1.2 }}
           >
-            All Too Well (Kenar's Version)
+            All Too Well 🧣(Kenar's Version)
           </motion.div>
         </motion.div>
 
         {/* 4. INTERACTION: Tombol & Lirik Lucu */}
         <div className="flex flex-col items-center gap-6">
           <div className="text-white/90 font-serif italic text-lg mb-2">
-            "It's supposed to be fun <span className="underline decoration-white/50"><br></br>turning 21!</span>"
+            I have a secret message for you, written in the stars of our memories.
           </div>
 
           <motion.button 
             onClick={startJourney}
-            className="group relative inline-flex items-center gap-4 py-3 px-6 bg-white text-[#8b0000] rounded-sm text-lg uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-xl"
+            className="group relative inline-flex items-center gap-4 py-2 px-4 bg-white text-[#8b0000] rounded-sm text-lg uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-xl"
             whileHover={{ y: -5 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -108,7 +108,7 @@ export default function Home() {
           </motion.button>
           
           <p className="text-[10px] font-mono text-white/50 uppercase tracking-[0.2em] mt-4">
-             Special gift for a special girl, dari pacar km yang paling gamtenk.
+             for a special girl, dibuat oleh pacar km yang paling gamtenk.
           </p>
         </div>
 

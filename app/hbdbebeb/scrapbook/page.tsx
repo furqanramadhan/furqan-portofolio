@@ -4,8 +4,74 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ArrowDown, Disc3, ArrowUpFromLine, PlayCircle } from 'lucide-react';
+import { ArrowDown, Disc3, ArrowUpFromLine, PlayCircle, Star, Ticket, Coffee, Heart, Moon } from 'lucide-react';
 import { useAudio } from '../AudioProvider'; 
+
+const ratings = [
+  { 
+    activity: "Makan Mie di Danau", 
+    rating: "-7/10", 
+    desc: "jujur momen yang memalukan mana ujan deres sama helm lepas hehe. tp gpp kalo kita ga main kesini km gakan jd pcrku",
+    image: "/assets/mie.jpeg" 
+  },
+  { 
+    activity: "Kaliurang Malem Malem", 
+    rating: "7/10", 
+    desc: "DINGINNNN tapi untungny km peluk aku aw",
+    image: "/assets/kaliurang.jpeg" 
+  },
+  { 
+    activity: "Minizoo Date", 
+    rating: "9/10", 
+    desc: "ASIK BANGET, review binturong",
+    image: "/assets/minizoo.jpeg" 
+  },
+  { 
+    activity: "Aquarium Date", 
+    rating: "999/10", 
+    desc: "Meskipun di tempat yg sama, ini amsik meskipun ikanny ga lucu tp untungnya kamu lucu",
+    image: "/assets/aquarium.jpeg" 
+  },
+  { 
+    activity: "Makan Bareng", 
+    rating: "9999999/10", 
+    desc: "Apapun makanannya klo sama kamu jadi enak",
+    image: "/assets/makan.jpeg" 
+  },
+  { 
+    activity: "COSAAANNNNNNN", 
+    rating: "777/10", 
+    desc: "Meskipun ky gaada tempat lain aja, tp makan dubai cuki cuki sambil nongkrong sama kamu jadi seru banget",
+    image: "/assets/cosan.jpeg" 
+  },
+];
+
+const vouchers = [
+  { 
+    title: "Unlimited Hug & Recharge", 
+    desc: "Berlaku pas kamu lagi capek atau stres sama dunia. Pelukan gratis sampai baterai kamu penuh lagi. nolimit.",
+    icon: <Star className="text-yellow-500" />,
+    code: "KELFIN-HEAL-AND-RECHARGE"
+  },
+  { 
+    title: "The 'Anywhere' Ticket", 
+    desc: "Sebutin satu tempat yang pengen kamu datengin, deket atau jauh kita bakal datengin.",
+    icon: <Moon className="text-indigo-400" />,
+    code: "ESCAPE-WITH-KELFIN"
+  },
+  { 
+    title: "Professional Support Partner", 
+    desc: "Lagi pusing nugas atau ada masalah? ak siap jadi pendengar, bantuin mikir, atau sekadar beliin makanan biar mood kamu balik.",
+    icon: <Coffee className="text-orange-500" />,
+    code: "KELFINIFUPNYK-SIAP-BANTU"
+  },
+  { 
+    title: "Voucher Deep Talk 2 AM", 
+    desc: "Kapanpun pengen cerita random atau gosip tengah malem, guwe siap dengerin.",
+    icon: <Moon className="text-blue-400" />,
+    code: "KELFIN-BELUM-TIDUR"
+  }
+];
 
 // --- DATA KOLEKSI KASET ---
 const cassetteCollection = [
@@ -254,8 +320,8 @@ export default function RedScrapbook() {
           </AnimatePresence>
         </motion.div>
       </section>
+      
 
-      {/* ================= 3. SECTIONS BERIKUTNYA (Tetap Sama) ================= */}
       {/* 3. Video Ucapan */}
       <section className="relative min-h-screen w-full flex flex-col items-center justify-center p-8 snap-start z-10">
         <motion.h2 
@@ -266,6 +332,7 @@ export default function RedScrapbook() {
         >
           Press Play.
         </motion.h2>
+        
 
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
@@ -288,6 +355,9 @@ export default function RedScrapbook() {
             </video>
           </div>
         </motion.div>
+        <p className="font-mono text-xs italic text-white/40 tracking-[0.3em] mt-3 mb-2">
+                NB: kalo lagunya tabrakan abis puter video, di eject kasetnya terus pilih ulang lagunya yah :v
+        </p>
       </section>
 
       {/* 4. Surat & Foto Bareng (Responsif HP) */}
@@ -300,21 +370,21 @@ export default function RedScrapbook() {
           style={{ backgroundImage: 'repeating-linear-gradient(transparent, transparent 31px, #ccc 31px, #ccc 32px)', lineHeight: '32px' }}
         >
           <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-red-800 rounded-full shadow-md border-2 border-white/50" />
-          <h3 className="font-bold text-3xl mb-8 italic text-[#cc2121]">Dear My Cutie Kenar,</h3>
-          <p className="font-serif italic text-lg leading-8 mb-8">
-            Happy birthday my honeybunnysweetie, my favorite person, my one and only that always makes my heart feel safe and happy. thank you for staying, for understanding me, and for loving me with all your heart. im the luckiest person to have you by my side.
+          <h3 className="font-bold text-3xl mb-8 italic text-[#cc2121] leading-8">Dear My Cutie Kenar,</h3>
+          <p className="font-serif italic text-lg leading-8 mb-8 text-justify">
+            Hapi birthday to my honeybunnysweetiee!! 🥳💖 my numba #1 fav person in the whole wide world! the only one who always make my heart feel so safe and happy. rly appreciate u staying and being sooooo patient with me. I feels so lucky to have u right now, srsly no joke, no gimik, no boong, nonono
           </p>
-          <p className="font-serif italic text-lg leading-8 mb-4">
-            i love you, and i hope this year brings you more joy, more love, and all the happiness you deserve. may we continue to create beautiful memories together, and may our love grow stronger with each passing day.
+          <p className="font-serif italic text-lg leading-8 mb-4 text-justify">
+            I love you more than words can say. Hope this year brings u double triple joy and happiness that u deserve. Let’s keep making beautiful memories together and may our love grow stronger every single day! I love you ALWAYS! ❤️
           </p>
-          <p className="font-sans text-lg text-right mt-8 font-bold italic text-[#cc2121]">
+          <p className="font-sans text-lg text-right mt-8 font-bold italic text-[#cc2121] leading-8">
             Love,<br/>Kelfin
           </p>
         </motion.div>
 
         {/* Polaroid List di samping surat */}
         <div className="w-full max-w-md flex flex-col sm:flex-row lg:flex-col gap-8 justify-center items-center text-center">
-            <p className="font-mono text-xs italic text-white/40 tracking-[0.3em] mb-2">
+            <p className="font-mono text-xs italic text-white/40 tracking-[0.3em] mb-2 mt-8">
                 This is us. From the first day we met, to now.
              </p>
           <motion.div 
@@ -339,12 +409,143 @@ export default function RedScrapbook() {
             <div className="relative w-full aspect-square bg-gray-200 overflow-hidden">
                <Image src="/assets/foto-bareng2.png" alt="Us" fill className="object-cover" />
             </div>
-            <p className="text-center text-black mt-4 font-sans font-bold opacity-70">And this is us now</p>
+            <p className="text-center text-black mt-4 font-sans font-bold opacity-70">And this is us now 😛</p>
           </motion.div>
         </div>
       </section>
-    
-            {/* ================= 4.5 NEW TRANSITION SECTION ================= */}
+
+      {/* ================= NEW TRANSITION: THE ECHO OF US ================= */}
+      <section className="relative h-[120vh] w-full flex flex-col items-center justify-center snap-start z-10 p-8">
+        <div className="max-w-3xl w-full space-y-24">
+          
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: false, margin: "-100px" }}
+            className="text-left"
+          >
+            <h3 className="text-3xl md:text-5xl font-serif italic text-white/50 leading-tight">
+              I might not be able take you to those <span className="text-white not-italic font-bold underline decoration-[#fca5a5]/30">fancy places or expensive dinners</span> right now,
+            </h3>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+            viewport={{ once: false, margin: "-100px" }}
+            className="text-right"
+          >
+            <h3 className="text-3xl md:text-5xl font-serif italic text-white/50 leading-tight">
+              but I can offer you <span className="text-white not-italic font-bold">lifetime support!</span> <br className="hidden md:block" /> just know that I’ll always be by your side, ready to help you with every single thing you need
+            </h3>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+            viewport={{ once: false, margin: "-100px" }}
+            className="text-center"
+          >
+            <h3 className="text-3xl md:text-5xl font-serif italic text-white/50 leading-tight">
+              just wait, and I’ll take you <br className="hidden md:block" /> anywhere you ever wanted to go
+            </h3>
+            
+            {/* Divider kecil yang manis */}
+            <motion.div 
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              transition={{ delay: 1.2, duration: 1 }}
+              className="h-[1px] w-20 bg-white/40 mx-auto mt-12"
+            />
+            
+            
+          </motion.div>
+
+        </div>
+
+        {/* Floating background text (Optional - The 1975 style) */}
+        <div className="absolute inset-0 flex items-center justify-center -z-10 opacity-[0.02] select-none pointer-events-none">
+          <h1 className="text-[20vw] font-black leading-none">MEMORIES</h1>
+        </div>
+      </section>
+      
+      {/* ================= NEW SECTION: RATING MOMENTS (WITH PHOTOS) ================= */}
+      <section className="relative min-h-screen w-full flex flex-col items-center justify-center p-8 md:p-16 snap-start z-10 overflow-hidden mb-20">
+        <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 1.5 }}
+              className="font-mono text-[10px] tracking-[0.4em] text-white/30 uppercase text-center mb-4"
+            >
+              These are the moments that I’ll cherish forever...
+            </motion.p>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold italic">Rating things <br></br> we did.</h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
+          {ratings.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30, rotate: index % 2 === 0 ? -1 : 1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.02, rotate: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: index * 0.1, type: "spring" }}
+              className="group bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-3xl flex flex-col gap-4 shadow-2xl"
+            >
+              {/* Image Cover Card */}
+              <div className="relative w-full aspect-video md:aspect-[16/10] overflow-hidden rounded-2xl border border-white/5">
+                <Image 
+                  src={item.image} 
+                  alt={item.activity} 
+                  fill 
+                  className="object-cover transition-transform duration-500 group-hover:scale-110" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
+                
+                {/* Badge Rating di Atas Foto */}
+                <div className="absolute top-4 right-4 flex items-center gap-1.5 text-yellow-400 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+                  <Star size={14} fill="currentColor" />
+                  <span className="font-mono text-xs font-bold text-white">{item.rating}</span>
+                </div>
+              </div>
+
+              {/* Text Info */}
+              <div className="px-2 pb-2">
+                <h3 className="text-2xl font-bold font-serif mb-1 italic">{item.activity}</h3>
+                <p className="text-white/60 text-sm leading-relaxed">"{item.desc}"</p>
+                
+                {/* Decorative dots ala scrapbook */}
+                <div className="mt-4 flex gap-1.5">
+                    {[...Array(3)].map((_, i) => (
+                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                    ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Floating Star Background Decoration */}
+        <motion.div 
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="absolute -right-32 -bottom-32 opacity-[0.03] pointer-events-none"
+        >
+          <Star size={500} />
+        </motion.div>
+      </section>
+
+      {/* ================= 4.5 NEW TRANSITION SECTION ================= */}
       <section className="relative h-screen w-full flex items-center justify-center snap-start z-10 p-8">
         <motion.div
           initial={{ opacity: 0 }}
@@ -369,7 +570,7 @@ export default function RedScrapbook() {
             transition={{ delay: 0.5, duration: 1 }}
             className="font-mono text-xs italic text-white/40 tracking-[0.3em] mb-2 mt-2">
             
-                literally who knows
+                literally who knows?
              </motion.p>
           
           <motion.div 
@@ -379,6 +580,59 @@ export default function RedScrapbook() {
             className="mt-8 h-[1px] w-40 bg-gradient-to-r from-transparent via-white/50 to-transparent mx-auto"
           />
         </motion.div>
+      </section>
+      
+      {/* ================= NEW SECTION: LOVE VOUCHERS ================= */}
+      <section className="relative min-h-screen w-full flex flex-col items-center justify-center p-8 snap-start z-10 overflow-hidden bg-black/5">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <p className="font-mono text-xs uppercase text-white/40 tracking-[0.3em] mb-2">Exclusive for you</p>
+          <h2 className="text-4xl md:text-5xl font-bold italic">Kelfin's Special Vouchers 🎟️</h2>
+          <p className="mt-4 text-white/60 font-serif italic">Reedem pake kode promonya ke aku yah</p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+          {vouchers.map((v, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ scale: 1.05, rotate: i % 2 === 0 ? 1 : -1 }}
+              className="relative bg-white text-black p-6 rounded-xl overflow-hidden flex shadow-[0_10px_0_0_rgba(255,255,255,0.1)]"
+            >
+              {/* Sisi Kiri (Icon) */}
+              <div className="pr-6 border-r-2 border-dashed border-black/20 flex items-center justify-center">
+                <div className="p-3 bg-gray-100 rounded-full">
+                  {v.icon}
+                </div>
+              </div>
+
+              {/* Sisi Kanan (Content) */}
+              <div className="pl-6 flex flex-col justify-center text-left">
+                <h3 className="font-bold text-lg uppercase tracking-tight">{v.title}</h3>
+                <p className="text-xs text-black/60 italic mt-1 leading-relaxed">{v.desc}</p>
+                <div className="mt-4 bg-black/5 px-2 py-1 rounded border border-black/10 inline-block w-fit">
+                  <span className="font-mono text-[10px] font-bold">CODE: {v.code}</span>
+                </div>
+              </div>
+
+              {/* Lubang Tiket (Estetika) */}
+              <div className="absolute top-1/2 -translate-y-1/2 -left-3 w-6 h-6 bg-[#cc2121] rounded-full" />
+              <div className="absolute top-1/2 -translate-y-1/2 -right-3 w-6 h-6 bg-[#cc2121] rounded-full" />
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.p 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="mt-16 font-mono text-[10px] text-white/40 tracking-widest uppercase"
+        >
+          *Terms & conditions apply: Cukup bilang "SAYANGGGGGGGGGGGGGGGGGG" sama kiss minimal 50x buat aktifin
+        </motion.p>
       </section>
 
       {/* 5. Ending Section */}
