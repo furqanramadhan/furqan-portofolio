@@ -204,6 +204,44 @@ export default function RedScrapbook() {
             </motion.div>
           </div>
         </motion.div>
+      </section>    
+
+      {/* 3. Video Ucapan */}
+      <section className="relative min-h-screen w-full flex flex-col items-center justify-center p-8 snap-start z-10">
+        <motion.h2 
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-4xl md:text-5xl font-bold italic mb-12 text-center"
+        >
+          Press Play.
+        </motion.h2>
+        
+
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="relative w-full max-w-4xl aspect-video bg-[#E5E4E2] rounded-3xl p-4 md:p-8 shadow-2xl border-b-8 border-r-8 border-black/20"
+        >
+          <div className="w-full h-full bg-black rounded-xl overflow-hidden relative shadow-inner">
+            <video 
+            controls 
+            className="w-full h-full object-cover"
+            poster="/assets/video-thumbnail.png"
+            // TAMBAHKAN 3 BARIS INI:
+            onPlay={() => pauseAudio()}    // Lagu berhenti pas video jalan
+            onPause={() => resumeAudio()}  // Lagu lanjut pas video dipause
+            onEnded={() => resumeAudio()}  // Lagu lanjut pas video selesai
+            >
+            <source src="/assets/ucapan-kelfin.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+            </video>
+          </div>
+        </motion.div>
+        <p className="font-mono text-xs italic text-white/40 tracking-[0.3em] mt-3 mb-2">
+                NB: kalo lagunya tabrakan abis puter video, kamu bisa ganti lagu dibawah
+        </p>
       </section>
 
       {/* ================= 2. THE COLLECTOR'S DESK ================= */}
@@ -216,7 +254,7 @@ export default function RedScrapbook() {
             viewport={{ once: true }}
         >
             <p className="font-mono text-xs uppercase text-white/40 tracking-[0.3em] mb-2">
-                OUR SOUNDTRACK
+                Pilih lagu buat sambil kamu baca letter aku dibawah
             </p>
             <p className="text-3xl font-bold italic tracking-tight text-white/90">
                 Choose (click) your track<br></br> to play
@@ -353,45 +391,6 @@ export default function RedScrapbook() {
             )}
           </AnimatePresence>
         </motion.div>
-      </section>
-      
-
-      {/* 3. Video Ucapan */}
-      <section className="relative min-h-screen w-full flex flex-col items-center justify-center p-8 snap-start z-10">
-        <motion.h2 
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold italic mb-12 text-center"
-        >
-          Press Play.
-        </motion.h2>
-        
-
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="relative w-full max-w-4xl aspect-video bg-[#E5E4E2] rounded-3xl p-4 md:p-8 shadow-2xl border-b-8 border-r-8 border-black/20"
-        >
-          <div className="w-full h-full bg-black rounded-xl overflow-hidden relative shadow-inner">
-            <video 
-            controls 
-            className="w-full h-full object-cover"
-            poster="/assets/video-thumbnail.png"
-            // TAMBAHKAN 3 BARIS INI:
-            onPlay={() => pauseAudio()}    // Lagu berhenti pas video jalan
-            onPause={() => resumeAudio()}  // Lagu lanjut pas video dipause
-            onEnded={() => resumeAudio()}  // Lagu lanjut pas video selesai
-            >
-            <source src="/assets/ucapan-kelfin.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-            </video>
-          </div>
-        </motion.div>
-        <p className="font-mono text-xs italic text-white/40 tracking-[0.3em] mt-3 mb-2">
-                NB: kalo lagunya tabrakan abis puter video, di eject kasetnya terus pilih ulang lagunya yah :v
-        </p>
       </section>
 
       {/* 4. Surat & Foto Bareng (Responsif HP) */}
