@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ArrowDown, Disc3, ArrowUpFromLine, PlayCircle, Star, Ticket, Coffee, Heart, Moon } from 'lucide-react';
+import { ArrowDown, Disc3, ArrowUpFromLine, PlayCircle, Star, Ticket, Coffee, Heart, Moon, Mail } from 'lucide-react';
 import { useAudio } from '../AudioProvider'; 
 import confetti from 'canvas-confetti';
 
@@ -245,7 +245,7 @@ export default function RedScrapbook() {
       </section>
 
       {/* ================= 2. THE COLLECTOR'S DESK ================= */}
-      <section className="relative min-h-screen w-full flex flex-col items-center justify-center p-6 md:p-12 snap-start overflow-hidden">
+      <section className="relative min-h-screen w-full flex flex-col items-center justify-center p-6 mb-24 md:mb-40 snap-start overflow-hidden">
         
         <motion.div 
             className="absolute top-12 z-20 text-center pointer-events-none"
@@ -262,7 +262,7 @@ export default function RedScrapbook() {
         </motion.div>
 
         {/* ================= Koleksi Kaset ================= */}
-        <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-2 md:gap-8 lg:gap-12 w-full max-w-5xl items-center pt-32 pb-15 z-20">
+        <div className="flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-2 md:gap-8 lg:gap-12 w-full max-w-5xl items-center pt-40 pb-15 z-20">
           {cassetteCollection.map((cassette, index) => (
             <motion.button
               key={cassette.id}
@@ -393,6 +393,24 @@ export default function RedScrapbook() {
         </motion.div>
       </section>
 
+      <div className="h-40 w-full flex flex-col items-center justify-center gap-3 mt-20 mb-20">
+      <motion.div
+        animate={{ 
+          y: [0, -15, 0],
+          rotate: [0, 5, -5, 0]
+        }}
+        transition={{ 
+          duration: 3, 
+          repeat: Infinity, 
+          ease: "easeInOut" 
+        }}
+        className="text-white/20"
+      >
+        <Mail size={32} strokeWidth={1} />
+      </motion.div>
+      <p className="font-serif italic text-white/40 text-sm">Keep scrolling...</p>
+    </div>
+
       {/* 4. Surat & Foto Bareng (Responsif HP) */}
       <section className="relative min-h-screen w-full flex flex-col lg:flex-row items-center justify-center gap-12 p-8 md:p-16 lg:p-24 snap-start z-10">
         <motion.div 
@@ -405,7 +423,7 @@ export default function RedScrapbook() {
           <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-red-800 rounded-full shadow-md border-2 border-white/50" />
           <h3 className="font-bold text-3xl mb-8 italic text-[#cc2121] leading-8">Dear My Cutie Kenar,</h3>
           <p className="font-serif italic text-lg leading-8 mb-8 text-justify">
-            Hapi birthday to my honeybunnysweetiee!! 🥳💖 my numba #1 fav person in the whole wide world! the only one who always make my heart feel so safe and happy. rly appreciate u staying and being sooooo patient with me. I feels so lucky to have u right now, srsly no joke, no gimik, no boong, nonono
+            Hapi birthday to my honeybunnysweetiee!! 🥳💖 my numba #1 fav person in the whole wide world! the only one who always make my heart feel so safe and happy. rly appreciate u staying and being sooooo patient with me. I feels so lucky to have u by my side right now, srsly no joke, no gimik, no boong, nonono
           </p>
           <p className="font-serif italic text-lg leading-8 mb-4 text-justify">
             I love you more than words can say. Hope this year brings u double triple joy and happiness that u deserve. Let’s keep making beautiful memories together and may our love grow stronger every single day! I love you ALWAYS! ❤️
