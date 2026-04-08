@@ -706,7 +706,7 @@ export default function DomeGallery({
     // Add romantic labels
     const labelLeft = document.createElement('div');
     labelLeft.className = 'romantic-label label-left font-playfair';
-    labelLeft.innerText = 'Everything';
+    labelLeft.innerText = 'Bini Gweh';
 
     const labelRight = document.createElement('div');
     labelRight.className = 'romantic-label label-right font-playfair';
@@ -865,11 +865,11 @@ export default function DomeGallery({
         right: 0;
       }
       .label-left {
-        bottom: 20%;
+        bottom: 16%;
         transform: translateY(20px);
       }
       .label-right {
-        top: 20%;
+        top: 16%;
         transform: translateY(-20px);
       }
     }
