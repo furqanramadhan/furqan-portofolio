@@ -108,7 +108,7 @@ const cassetteCollection = [
     label: 'Track 4',
     songTitle: 'Daniel Caesar - Best Part',
     audioKey: 'bestpart',
-    bgColor: '#00FFFF',
+    bgColor: '#BF5700',
     positionList: { bottom: '30%', right: '15%' },
   },
   {
