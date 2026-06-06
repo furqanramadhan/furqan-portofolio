@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s | Furqan Ramadhan",
   },
   description:
-    "Official Portfolio of Furqan Ramadhan. Backend Developer & Informatics Student at Universitas Syiah Kuala. Specialized in Data Engineering and Full Stack Development.",
+    "Official Portfolio of Furqan Ramadhan. Frontend Developer & Informatics Student at Universitas Syiah Kuala. Specialized in Data Engineering and Full Stack Development.",
   keywords: [
     "Furqan Ramadhan",
     "Furqan",
@@ -68,7 +68,7 @@ const jsonLd = {
     "https://github.com/furqanramadhan",
     "mailto:furqan2682@gmail.com",
   ],
-  jobTitle: "Backend Developer",
+  jobTitle: "Frontend Developer",
   worksFor: {
     "@type": "Organization",
     name: "Universitas Syiah Kuala",

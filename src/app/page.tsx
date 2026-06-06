@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, use } from "react";
 import Image from "next/image";
-import SplashScreen from "@/src/components/SplashScreen";
+import SplashScreen from "@/src/components/splashSreen";
 import Header from "@/src/components/Header";
 import Skills from "@/src/app/skills/page";
 import Journey from "@/src/components/Journey";
@@ -349,39 +349,38 @@ export default function Home() {
                     marginBottom: 36,
                   }}
                 >
-                  {[
-                    "Frontend Dev",
-                    "Backend Dev",
-                    "Data Enthusiast",
-                    "Linux User",
-                  ].map((tag) => (
-                    <span
-                      key={tag}
-                      style={{
-                        fontSize: 11,
-                        color: theme.textMuted,
-                        border: `1px solid ${theme.border}`,
-                        padding: "3px 10px",
-                        letterSpacing: "0.06em",
-                        cursor: "default",
-                        transition: "all 0.2s",
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLSpanElement).style.color =
-                          accent;
-                        (e.currentTarget as HTMLSpanElement).style.borderColor =
-                          accent;
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLSpanElement).style.color =
-                          theme.textMuted;
-                        (e.currentTarget as HTMLSpanElement).style.borderColor =
-                          theme.border;
-                      }}
-                    >
-                      #{tag.toLowerCase().replace(" ", "_")}
-                    </span>
-                  ))}
+                  {["Frontend Dev", "Data Enthusiast", "Linux User"].map(
+                    (tag) => (
+                      <span
+                        key={tag}
+                        style={{
+                          fontSize: 11,
+                          color: theme.textMuted,
+                          border: `1px solid ${theme.border}`,
+                          padding: "3px 10px",
+                          letterSpacing: "0.06em",
+                          cursor: "default",
+                          transition: "all 0.2s",
+                        }}
+                        onMouseEnter={(e) => {
+                          (e.currentTarget as HTMLSpanElement).style.color =
+                            accent;
+                          (
+                            e.currentTarget as HTMLSpanElement
+                          ).style.borderColor = accent;
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.currentTarget as HTMLSpanElement).style.color =
+                            theme.textMuted;
+                          (
+                            e.currentTarget as HTMLSpanElement
+                          ).style.borderColor = theme.border;
+                        }}
+                      >
+                        #{tag.toLowerCase().replace(" ", "_")}
+                      </span>
+                    ),
+                  )}
                 </div>
 
                 {/* CTA buttons */}
