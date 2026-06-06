@@ -10,17 +10,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // --- Warna Bawaan Kamu (Tetap Aman) ---
         "brand-dark": "#0a0a0a",
         "brand-charcoal": "#1a1a1a",
-        "brand-red": "#B22222",
-        "brand-dark-red": "#8B0000",
-        "brand-light-red": "#DC143C",
+        "brand-blue": "#1793d1",
+        "brand-dark-blue": "#0e5a82",
+        "brand-light-blue": "#4eb3e5",
         "brand-gray": "#8a8a8a",
         "brand-light-gray": "#d1d1d1",
 
-        // --- Warna Premium Baru untuk Web Kenar ---
-        background: "#030712", // Deep slate black (Biar nggak tabrakan sama brand-dark)
+        // Add accent mapping to your brand color
+        accent: "var(--accent-color, #1793d1)",
+
+        background: "#030712",
         primary: "#1DB954", // Spotify green (buat controller lagu)
         romantic: {
           50: "#fdf2f8",

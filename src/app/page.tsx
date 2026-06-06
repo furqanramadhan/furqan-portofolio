@@ -2,13 +2,13 @@
 import { useState, useEffect, use } from "react";
 import Image from "next/image";
 import SplashScreen from "@/src/components/splashSreen";
-import Header from "@/src/components/Header";
+import Header from "@/src/components/header";
 import Skills from "@/src/app/skills/page";
-import Journey from "@/src/components/Journey";
+import Journey from "@/src/components/journey";
 import FeaturedWork from "@/src/app/work/page";
 import About from "@/src/app/about/page";
 import Contact from "@/src/app/contact/page";
-import Footer from "@/src/components/Footer";
+import Footer from "@/src/components/footer";
 
 const roles = [
   "ME",
@@ -17,7 +17,7 @@ const roles = [
   "INFORMATICS STUDENT",
   "DATA ENTHUSIAST",
 ];
-const accent = "#1793d1";
+const accent = "var(--accent-color)";
 
 export default function Home() {
   const [isSplashFinished, setIsSplashFinished] = useState(false);
@@ -81,21 +81,6 @@ export default function Home() {
     isSplashFinished,
     typingSpeed,
   ]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const elements = document.querySelectorAll(".animate-on-scroll");
-      elements.forEach((element) => {
-        const elementTop = element.getBoundingClientRect().top;
-        if (elementTop < window.innerHeight / 1.2) {
-          element.classList.add("animated");
-        }
-      });
-    };
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  });
 
   const theme = isDark
     ? {
@@ -332,7 +317,7 @@ export default function Home() {
                 >
                   <span style={{ color: accent }}>›</span>
                   <span style={{ color: theme.text, fontWeight: 600 }}>
-                    COMPUTER_SCIENCE_STUDENT
+                    INFORMATICS STUDENT
                   </span>
                   <span style={{ color: theme.textMuted }}>—</span>
                   <span style={{ color: theme.textMuted }}>
@@ -615,8 +600,8 @@ export default function Home() {
           <Journey isDark={isDark} />
           <FeaturedWork isDark={isDark} />
           <About isDark={isDark} />
-          <Contact isDark={isDark} />
-          <Footer isDark={isDark} /> */}
+          <Contact isDark={isDark} /> */}
+          <Footer isDark={isDark} />
         </>
       )}
 

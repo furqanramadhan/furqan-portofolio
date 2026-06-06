@@ -11,7 +11,7 @@ export default function Header({ isDark, onToggleTheme }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
-  const accent = "#1793d1";
+  const accent = "var(--accent-color)";
 
   const border = isDark ? "#1e1e1e" : "#C8BFA8";
   const textMuted = isDark ? "#555555" : "#7A7060";
@@ -19,20 +19,21 @@ export default function Header({ isDark, onToggleTheme }: HeaderProps) {
   const textColor = isDark ? "#C8C8C8" : "#1A1A1A";
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
-      const sections = document.querySelectorAll("section");
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        if (window.scrollY >= sectionTop - 250) {
-          const id = section.getAttribute("id");
-          if (id) setActiveSection(id);
-        }
-      });
-    };
+    // Keep the simple scroll check for the scrolled (blur) state
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
+
+    // Listen for the custom event from SmoothScroll
+    const handleSectionActive = (e: Event) => {
+      const { id } = (e as CustomEvent).detail;
+      setActiveSection(id);
+    };
+    window.addEventListener("section:active", handleSectionActive);
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("section:action", handleSectionActive);
+    };
   }, []);
 
   const getSectionId = (menuName: string) => {

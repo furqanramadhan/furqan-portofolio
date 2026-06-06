@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Syne } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import SmoothScroll from "@/src/components/SmoothScroll";
+import SmoothScroll from "@/src/components/smoothScroll";
 
 const inter = Inter({ subsets: ["latin"] });
 

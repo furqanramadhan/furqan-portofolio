@@ -7,7 +7,7 @@ interface SplashScreenProps {
   onFadeStart?: () => void;
 }
 
-const accent = "#1793d1";
+const accent = "var(--accent-color)";
 
 export default function SplashScreen({
   onFinish,
