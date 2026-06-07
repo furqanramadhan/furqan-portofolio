@@ -9,6 +9,7 @@ import FeaturedWork from "@/src/app/work/page";
 import About from "@/src/app/about/page";
 import Contact from "@/src/app/contact/page";
 import Footer from "@/src/components/footer";
+import SmoothScroll from "@/src/components/smoothScroll";
 
 const roles = [
   "ME",
@@ -121,7 +122,7 @@ export default function Home() {
           <section
             id="home"
             style={{
-              minHeight: "100vh",
+              minHeight: "90vh",
               position: "relative",
               overflow: "hidden",
               paddingTop: "80px",
@@ -175,7 +176,7 @@ export default function Home() {
                 width: "90%",
                 maxWidth: 1200,
                 margin: "0 auto",
-                padding: "40px 20px 80px",
+                padding: "40px 20px 40px",
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
                 gap: 48,
@@ -558,41 +559,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
-            {/* Bottom statusbar */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                borderTop: `1px solid ${theme.border}`,
-                background: isDark ? "#0a0a0a" : "#E8E3D8",
-                padding: "8px 24px",
-                display: "flex",
-                justifyContent: "space-between",
-                zIndex: 5,
-              }}
-            >
-              <span
-                style={{
-                  fontSize: 10,
-                  color: theme.textMuted,
-                  letterSpacing: "0.06em",
-                }}
-              >
-                furqan@portfolio:~$ <span style={{ color: accent }}>_</span>
-              </span>
-              <span
-                style={{
-                  fontSize: 10,
-                  color: theme.textMuted,
-                  letterSpacing: "0.06em",
-                }}
-              >
-                {isDark ? "THEME: DARK" : "THEME: LIGHT"} · ARCH LINUX · NODE 20
-              </span>
-            </div>
           </section>
 
           {/* Other sections — pass isDark so they can inherit theme */}
@@ -601,6 +567,8 @@ export default function Home() {
           <FeaturedWork isDark={isDark} />
           <About isDark={isDark} />
           <Contact isDark={isDark} /> */}
+          <SmoothScroll />
+          <Skills isDark={isDark} />
           <Footer isDark={isDark} />
         </>
       )}

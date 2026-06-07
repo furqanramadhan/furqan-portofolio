@@ -41,6 +41,28 @@ export default function Footer({ isDark = true }: FooterProps) {
         transition: "all 0.3s ease",
       }}
     >
+      {/* CLI Status Bar */}
+      <div
+        style={{
+          borderBottom: `1px solid ${border}`,
+          background: isDark ? "#0d0d0d" : "#EDE8DC", // Slightly different shade for the CLI look
+          padding: "8px 24px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <span
+          style={{ fontSize: 10, color: textMuted, letterSpacing: "0.06em" }}
+        >
+          furqan@portfolio:~$ <span style={{ color: accent }}>_</span>
+        </span>
+        <span
+          style={{ fontSize: 10, color: textMuted, letterSpacing: "0.06em" }}
+        >
+          {isDark ? "THEME: DARK" : "THEME: LIGHT"} · ARCH LINUX · NODE 20
+        </span>
+      </div>
       {/* Main statusbar */}
       <div
         style={{
