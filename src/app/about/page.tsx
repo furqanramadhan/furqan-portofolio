@@ -1,175 +1,669 @@
 "use client";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import SpotlightCard from "@/src/components/SpotlightCard";
 
-export default function About() {
+interface AboutProps {
+  isDark?: boolean;
+}
+
+//Placeholder for image collection
+const galleryImages = [
+  {
+    src: "/assets/image/about/gallery-1.png",
+    caption: "AI-SE Winter School, Doha",
+  },
+  {
+    src: "/assets/image/about/gallery-2.png",
+    caption: "Bangkit Academy, Remote",
+  },
+  {
+    src: "/assets/image/about/gallery-3.png",
+    caption: "PMM — ITENAS, Bandung",
+  },
+  { src: "/assets/image/about/gallery-4.png", caption: "Somewhere on a trail" },
+  { src: "/assets/image/about/gallery-5.png", caption: "USK, Banda Aceh" },
+];
+
+const AUTOPLAY_INTERVAL = 3500;
+
+function ImageDump({ isDark }: { isDark: boolean }) {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const border = isDark ? "#1e1e1e" : "#C8BFA8";
+  const textMuted = isDark ? "#555555" : "#7A7060";
+
+  const next = () => setCurrentIdx((p) => (p + 1) % galleryImages.length);
+
+  useEffect(() => {
+    if (isHovered) return;
+    const timer = setInterval(next, AUTOPLAY_INTERVAL);
+    return () => clearInterval(timer);
+  }, [isHovered]);
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100%",
+        perspective: "1000px",
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Flashcard logic — we triple for reindexing feel */}
+      {[0, 1, 2].map((stackIdx) => {
+        const idx = (currentIdx + stackIdx) % galleryImages.length;
+        const img = galleryImages[idx];
+        const isTop = stackIdx === 0;
+
+        return (
+          <div
+            key={`${idx}-${stackIdx}`}
+            style={{
+              position: "absolute",
+              inset: 0,
+              zIndex: 10 - stackIdx,
+              transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
+              transform: `
+                translateY(${stackIdx * -6}px) 
+                translateX(${stackIdx * 6}px)
+                scale(${1 - stackIdx * 0.05})
+              `,
+              opacity: 1 - stackIdx * 0.4,
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                position: "relative",
+                border: isTop ? "none" : `1px solid ${border}`,
+                overflow: "hidden",
+              }}
+            >
+              <Image
+                src={img.src}
+                alt={img.caption}
+                fill
+                style={{
+                  objectFit: "cover",
+                  filter: isDark
+                    ? `brightness(${0.85 - stackIdx * 0.2}) contrast(1.05)`
+                    : `brightness(${0.95 - stackIdx * 0.1})`,
+                }}
+                priority={isTop}
+              />
+
+              {/* Only show caption on top card */}
+              {isTop && (
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: isDark
+                      ? "linear-gradient(to top, rgba(0,0,0,0.85), transparent)"
+                      : "linear-gradient(to top, rgba(245,240,232,0.9), transparent)",
+                    padding: "32px 16px 14px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 10,
+                      color: isDark ? "#C8C8C8" : "#1A1A1A",
+                      letterSpacing: "0.06em",
+                      fontFamily: "'JetBrains Mono', monospace",
+                    }}
+                  >
+                    {img.caption}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 9,
+                      color: "var(--accent-color)",
+                      fontFamily: "monospace",
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    {String(idx + 1).padStart(2, "0")}/
+                    {String(galleryImages.length).padStart(2, "0")}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+
+      {/* Manual toggle dot indicators */}
+      <div
+        style={{
+          position: "absolute",
+          top: 14,
+          right: 20,
+          display: "flex",
+          flexDirection: "column",
+          gap: 6,
+          zIndex: 20,
+        }}
+      >
+        {galleryImages.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrentIdx(i)}
+            style={{
+              width: 4,
+              height: i === currentIdx ? 16 : 4,
+              background:
+                i === currentIdx
+                  ? "var(--accent-color)"
+                  : isDark
+                    ? "#333"
+                    : "#C8BFA8",
+              border: "none",
+              cursor: "pointer",
+              padding: 0,
+              transition: "all 0.3s ease",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Progress loop indicator */}
+      {!isHovered && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            height: 2,
+            background: "var(--accent-color)",
+            zIndex: 30,
+            animation: `progress-bar ${AUTOPLAY_INTERVAL}ms linear infinite`,
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+export default function About({ isDark = true }: AboutProps) {
+  const theme = isDark
+    ? {
+        bg: "#0D0D0D",
+        bgCard: "#111111",
+        bgCardAlt: "#0f0f0f",
+        border: "#1e1e1e",
+        text: "#C8C8C8",
+        textMuted: "#555555",
+        textDim: "#2a2a2a",
+      }
+    : {
+        bg: "#F5F0E8",
+        bgCard: "#EDE8DC",
+        bgCardAlt: "#E8E3D8",
+        border: "#C8BFA8",
+        text: "#1A1A1A",
+        textMuted: "#7A7060",
+        textDim: "#B0A898",
+      };
+
+  const accent = "var(--accent-color)";
+
   return (
     <section
       id="about"
-      className="py-24 bg-brand-dark relative overflow-hidden"
+      style={{
+        background: theme.bg,
+        padding: "80px 0",
+        borderBottom: `1px solid ${theme.border}`,
+        fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+        transition: "all 0.3s ease",
+        position: "relative",
+        overflow: "hidden",
+      }}
     >
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-red/5 blur-[120px] rounded-full pointer-events-none"></div>
+      {/* Subtle radial glow */}
+      <div
+        style={{
+          position: "absolute",
+          top: "40%",
+          left: "30%",
+          width: 500,
+          height: 500,
+          background:
+            "radial-gradient(circle, rgba(23,147,209,0.04) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
 
-      <div className="w-[90%] max-w-[1200px] mx-auto px-5 mb-16">
-        <h2 className="text-4xl md:text-5xl font-extrabold relative inline-block mb-4">
-          ABOUT ME
-          <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-brand-red rounded-full"></span>
-        </h2>
-      </div>
-
-      <div className="w-[90%] max-w-[1200px] mx-auto px-5 grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6">
-        {/* BOX 1: PHOTO */}
-        <SpotlightCard className="order-first md:order-none md:col-span-1 md:row-span-1 bg-brand-charcoal rounded-[2rem] border border-white/5 group hover:border-brand-red/30 transition-all duration-500 min-h-[250px]">
-          <Image
-            src="/assets/image/about.png"
-            alt="Farelino Profile"
-            fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-        </SpotlightCard>
-
-        {/* BOX 2: MAIN BIO */}
-        <SpotlightCard className="md:col-span-2 md:row-span-1 bg-brand-charcoal rounded-[2rem] border border-white/5 p-8 group hover:border-brand-red/30 transition-all duration-500">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-red/10 blur-[50px] rounded-full -mr-10 -mt-10"></div>
-
-          <div className="relative z-10">
-            <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-              Leveling Up in Tech ᗧ•••👻
-            </h3>
-            <p className="text-brand-gray leading-relaxed text-lg">
-              Hi, I'm{" "}
-              <span className="text-white font-semibold">Farelino Kelfin</span>.
-              A Informatics student from Indonesia, with a passion for growth.
-              <br />
-              <br />I specialize in building modern web applications while
-              deeply exploring the vast world of{" "}
-              <span className="text-white">
-                Data Science, Data Analysis, and Data Engineering.
-              </span>{" "}
-              Currently leveling up my skills to transform complex datasets into
-              actionable insights and robust data pipelines.
-            </p>
-          </div>
-        </SpotlightCard>
-
-        {/* BOX 3: BASED IN JOGJA */}
-        <SpotlightCard className="md:col-span-1 bg-brand-charcoal rounded-[2rem] border border-white/5 p-6 group hover:border-brand-red/30 transition-all duration-500 flex flex-col justify-between min-h-[200px]">
-          <div
-            className="absolute inset-0 opacity-30 grayscale group-hover:grayscale-0 transition-all duration-500"
+      <div
+        style={{
+          width: "90%",
+          maxWidth: 1200,
+          margin: "0 auto",
+          padding: "0 20px",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        {/* Section header */}
+        <div className="animate-on-scroll" style={{ marginBottom: 48 }}>
+          <h2
             style={{
-              backgroundImage:
-                "url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              fontSize: "clamp(28px, 4vw, 44px)",
+              fontWeight: 700,
+              color: theme.text,
+              margin: 0,
+              letterSpacing: "0.04em",
+              position: "relative",
+              display: "inline-block",
             }}
-          ></div>
-          <div className="absolute inset-0 bg-brand-dark/60"></div>
-
-          <div className="relative z-10">
-            <div className="w-10 h-10 bg-brand-charcoal/80 backdrop-blur-md rounded-full flex items-center justify-center border border-brand-red/50 mb-3">
-              <i className="fas fa-map-marker-alt text-brand-red animate-bounce"></i>
-            </div>
-            <h4 className="text-gray-400 text-sm font-medium uppercase tracking-wider">
-              Based in
-            </h4>
-            <p className="text-2xl font-bold text-white">Yogyakarta, ID</p>
-          </div>
-          <div className="relative z-10 mt-4">
-            <span className="text-xs text-brand-gray bg-black/50 px-3 py-1.5 rounded-lg border border-white/10">
-              UTC+7 (WIB)
-            </span>
-          </div>
-        </SpotlightCard>
-
-        {/* BOX 4: SPOTIFY - DANCING IN THE FLAMES */}
-        <SpotlightCard
-          spotlightColor="rgba(29, 185, 84, 0.2)"
-          className="md:col-span-1 bg-brand-charcoal rounded-[2rem] border border-white/5 p-6 flex flex-col justify-between group hover:border-[#1DB954]/50 transition-all duration-500"
-        >
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-          <div className="absolute -right-10 -top-10 w-32 h-32 bg-[#1DB954]/10 blur-[50px] rounded-full group-hover:bg-[#1DB954]/30 transition-all duration-500"></div>
-
-          <div className="relative z-10 mb-4 flex items-center justify-between">
-            <span className="text-[10px] text-[#1DB954] font-bold tracking-widest uppercase border border-[#1DB954]/30 px-3 py-1 rounded-full bg-[#1DB954]/5 flex items-center gap-2">
-              <i className="fas fa-sync-alt animate-spin-slow"></i> Currently On
-              Repeat Song
-            </span>
-            <div className="flex gap-0.5 items-end h-4 opacity-70">
-              <span className="w-1 bg-[#1DB954] rounded-full animate-music-bar-1 h-2"></span>
-              <span className="w-1 bg-[#1DB954] rounded-full animate-music-bar-2 h-3"></span>
-              <span className="w-1 bg-[#1DB954] rounded-full animate-music-bar-3 h-2"></span>
-            </div>
-          </div>
-
-          <div className="relative z-10 flex items-center gap-4 mb-2">
-            <div className="relative w-16 h-16 shrink-0 group-hover:scale-105 transition-transform duration-500">
-              <img
-                src="assets/image/album_song.png"
-                alt="Dancing In The Flames"
-                className="w-full h-full rounded-xl object-cover shadow-lg shadow-black/50 border border-white/10"
-              />
-            </div>
-
-            <div className="flex flex-col min-w-0">
-              <h4 className="text-white font-bold truncate leading-tight text-lg group-hover:text-[#1DB954] transition-colors">
-                Dancing In The Flames
-              </h4>
-              <p className="text-brand-gray text-sm truncate">The Weeknd</p>
-            </div>
-          </div>
-
-          <a
-            href="https://open.spotify.com/track/7z7kvUQGwlC6iOl7vMuAr9?si=0318829fa4a74762"
-            target="_blank"
-            className="relative z-10 mt-auto w-full bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#1DB954]/20 active:scale-95"
           >
-            <i className="fab fa-spotify text-lg"></i>
-            <span className="text-sm">Play on Spotify</span>
-          </a>
-        </SpotlightCard>
+            ABOUT ME
+            <span
+              style={{
+                position: "absolute",
+                bottom: -6,
+                left: 0,
+                width: 48,
+                height: 2,
+                background: accent,
+                boxShadow: "0 0 8px var(--accent-color)",
+              }}
+            />
+          </h2>
+        </div>
 
-        {/* BOX 5: SOCIAL CONNECT */}
-        <SpotlightCard className="md:col-span-1 bg-brand-charcoal rounded-[2rem] border border-white/5 p-6 flex flex-col justify-center group hover:border-brand-red/30 transition-all duration-500">
-          <h3 className="text-xl font-bold text-white mb-6 relative z-10">
-            Let's Connect
-          </h3>
-
-          <div className="flex flex-wrap gap-3 justify-start relative z-10">
-            <a
-              href="https://www.linkedin.com/in/farelino-kelfin-117637ab/"
-              target="_blank"
-              className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-white hover:bg-[#0077b5] hover:scale-110 transition-all duration-300 border border-white/10"
+        {/* Asymmetric layout: photo left | right stack */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1.1fr",
+            gridTemplateRows: "auto auto",
+            gap: 16,
+            alignItems: "stretch",
+          }}
+        >
+          {/* LEFT — tall portrait photo */}
+          <div
+            className="animate-on-scroll"
+            style={{
+              gridRow: "1 / 3",
+              position: "relative",
+              border: `1px solid ${theme.border}`,
+              overflow: "hidden",
+              minHeight: 480,
+            }}
+          >
+            <Image
+              src="/assets/image/about/about.png"
+              alt="Furqan Ramadhan"
+              fill
+              style={{
+                objectFit: "cover",
+                objectPosition: "top center",
+                filter: isDark
+                  ? "brightness(0.85) contrast(1.05) grayscale(0.2)"
+                  : "brightness(0.95)",
+              }}
+              priority
+            />
+            {/* Overlay gradient */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: isDark
+                  ? "linear-gradient(to top, rgba(13,13,13,0.9) 0%, transparent 40%)"
+                  : "linear-gradient(to top, rgba(245,240,232,0.6) 0%, transparent 50%)",
+              }}
+            />
+            {/* Terminal Decoration */}
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                padding: "8px 12px",
+                display: "flex",
+                justifyContent: "space-between",
+                background: isDark
+                  ? "rgba(20,20,20,0.6)"
+                  : "rgba(255,255,255,0.4)",
+                borderBottom: `1px solid ${theme.border}`,
+                backdropFilter: "blur(4px)",
+              }}
             >
-              <i className="fab fa-linkedin-in text-xl"></i>
-            </a>
+              <div style={{ display: "flex", gap: 6 }}>
+                <div
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: "50%",
+                    background: "#ff5f56",
+                  }}
+                />
+                <div
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: "50%",
+                    background: "#ffbd2e",
+                  }}
+                />
+                <div
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: "50%",
+                    background: "#27c93f",
+                  }}
+                />
+              </div>
+              <div
+                style={{ fontSize: 9, color: theme.textMuted, opacity: 0.8 }}
+              >
+                identity.jpg
+              </div>
+            </div>
 
-            <a
-              href="https://github.com/kelfinofarelino"
-              target="_blank"
-              className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-white hover:bg-[#333] hover:scale-110 transition-all duration-300 border border-white/10"
+            {/* Name tag with improved layout */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: 24,
+                left: 24,
+                right: 24,
+              }}
             >
-              <i className="fab fa-github text-xl"></i>
-            </a>
-
-            <a
-              href="https://instagram.com/farelino.kelfino/"
-              target="_blank"
-              className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-white hover:bg-[#E1306C] hover:scale-110 transition-all duration-300 border border-white/10"
-            >
-              <i className="fab fa-instagram text-xl"></i>
-            </a>
-
-            <a
-              href="https://open.spotify.com/user/5v66c4mm5dv582v78wdt4b3gk?si=b3891b9a8f984dc1"
-              target="_blank"
-              className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-white hover:bg-[#1DB954] hover:scale-110 transition-all duration-300 border border-white/10"
-            >
-              <i className="fab fa-spotify text-xl"></i>
-            </a>
+              <div
+                style={{
+                  fontSize: 10,
+                  color: accent,
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  marginBottom: 6,
+                }}
+              >
+                // current_user
+              </div>
+              <div
+                style={{
+                  fontSize: 22,
+                  fontWeight: 800,
+                  color: isDark ? "#fff" : "#1A1A1A",
+                  letterSpacing: "0.02em",
+                  lineHeight: 1,
+                }}
+              >
+                FURQAN RAMADHAN
+              </div>
+              <div
+                style={{
+                  fontSize: 12,
+                  color: theme.textMuted,
+                  letterSpacing: "0.04em",
+                  marginTop: 6,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
+                <span style={{ color: accent }}>$</span> location -- Banda Aceh,
+                Id
+              </div>
+            </div>
           </div>
-        </SpotlightCard>
+
+          {/* RIGHT TOP — Bio */}
+          <div
+            className="animate-on-scroll"
+            style={{
+              border: `1px solid ${theme.border}`,
+              background: theme.bgCard,
+              padding: "32px",
+              position: "relative",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            {/* Background Pattern */}
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                width: 120,
+                height: 120,
+                background: `linear-gradient(135deg, transparent 70%, ${accent} 70%)`,
+                opacity: 0.05,
+                pointerEvents: "none",
+              }}
+            />
+
+            <div
+              style={{
+                fontSize: 10,
+                color: accent,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                marginBottom: 20,
+                fontWeight: 600,
+              }}
+            >
+              [ 01_bio ]
+            </div>
+            <p
+              style={{
+                fontSize: 14,
+                color: theme.text,
+                lineHeight: 1.9,
+                margin: 0,
+                maxWidth: "90%",
+              }}
+            >
+              Hi, I'm{" "}
+              <span style={{ color: accent, fontWeight: 700 }}>Furqan</span> — a
+              Computer Science student deeply immersed in the world of{" "}
+              <span style={{ color: theme.text, fontWeight: 700 }}>
+                Universitas Syiah Kuala
+              </span>
+              .
+              <br />
+              <br />I bridge the gap between creative frontend experiences and
+              robust backend logic. My philosophy is simple: build tools that
+              solve real problems, keep the code modular, and never stop
+              exploring the edge of what's possible with web technologies.
+            </p>
+
+            {/* Hobby tags */}
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 10,
+                marginTop: 28,
+              }}
+            >
+              {[
+                "⛰️ hiking",
+                "🌿 outdoors",
+                "📖 reading",
+                "🐧 arch linux",
+                "☕ coffee",
+                "💻 fullstack",
+              ].map((tag) => (
+                <span
+                  key={tag}
+                  style={{
+                    fontSize: 11,
+                    color: theme.textMuted,
+                    border: `1px solid ${theme.border}`,
+                    background: isDark
+                      ? "rgba(255,255,255,0.02)"
+                      : "rgba(0,0,0,0.02)",
+                    padding: "4px 12px",
+                    letterSpacing: "0.04em",
+                    transition: "all 0.3s ease",
+                    cursor: "default",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLSpanElement).style.color = "#fff";
+                    (e.currentTarget as HTMLSpanElement).style.background =
+                      accent;
+                    (e.currentTarget as HTMLSpanElement).style.borderColor =
+                      accent;
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLSpanElement).style.color =
+                      theme.textMuted;
+                    (e.currentTarget as HTMLSpanElement).style.background =
+                      isDark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)";
+                    (e.currentTarget as HTMLSpanElement).style.borderColor =
+                      theme.border;
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT BOTTOM — split: gallery + quote */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.2fr 1fr",
+              gap: 16,
+            }}
+          >
+            {/* Gallery / image dump */}
+            <div
+              className="animate-on-scroll"
+              style={{
+                position: "relative",
+                border: `1px solid ${theme.border}`,
+                overflow: "hidden",
+                minHeight: 220,
+              }}
+            >
+              <ImageDump isDark={isDark} />
+            </div>
+
+            {/* Quote card */}
+            <div
+              className="animate-on-scroll"
+              style={{
+                border: `1px solid ${theme.border}`,
+                background: theme.bgCard,
+                padding: "24px 20px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {/* Mountain decoration */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  fontSize: 80,
+                  opacity: 0.04,
+                  lineHeight: 1,
+                  userSelect: "none",
+                  pointerEvents: "none",
+                }}
+              >
+                ⛰
+              </div>
+
+              <div
+                style={{
+                  fontSize: 10,
+                  color: accent,
+                  letterSpacing: "0.1em",
+                  marginBottom: 16,
+                }}
+              >
+                // philosophy
+              </div>
+
+              <blockquote
+                style={{
+                  margin: 0,
+                  fontSize: 13,
+                  color: theme.text,
+                  lineHeight: 1.75,
+                  fontStyle: "italic",
+                  position: "relative",
+                  zIndex: 1,
+                  flex: 1,
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 32,
+                    color: accent,
+                    lineHeight: 0,
+                    verticalAlign: "-0.4em",
+                    marginRight: 4,
+                    opacity: 0.6,
+                  }}
+                >
+                  "
+                </span>
+                The mountains are calling and I must go — but first, let me push
+                this commit.
+                <span
+                  style={{
+                    fontSize: 32,
+                    color: accent,
+                    lineHeight: 0,
+                    verticalAlign: "-0.4em",
+                    marginLeft: 4,
+                    opacity: 0.6,
+                  }}
+                >
+                  "
+                </span>
+              </blockquote>
+
+              <div
+                style={{
+                  fontSize: 10,
+                  color: theme.textMuted,
+                  letterSpacing: "0.08em",
+                  marginTop: 16,
+                  borderTop: `1px solid ${theme.border}`,
+                  paddingTop: 12,
+                }}
+              >
+                — Furqan, probably
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <style>{`
+        @keyframes progress-bar {
+          from { width: 0%; }
+          to   { width: 100%; }
+        }
+      `}</style>
     </section>
   );
 }

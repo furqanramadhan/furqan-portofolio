@@ -569,6 +569,8 @@ export default function Home() {
           <Contact isDark={isDark} /> */}
           <SmoothScroll />
           <Skills isDark={isDark} />
+          <About isDark={isDark} />
+          <Contact isDark={isDark} />
           <Footer isDark={isDark} />
         </>
       )}
