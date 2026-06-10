@@ -4,7 +4,7 @@ import Image from "next/image";
 import SplashScreen from "@/src/components/splashSreen";
 import Header from "@/src/components/header";
 import Skills from "@/src/app/skills/page";
-import Journey from "@/src/components/journey";
+import Journey from "@/src/app/journey/page";
 import FeaturedWork from "@/src/app/work/page";
 import About from "@/src/app/about/page";
 import Contact from "@/src/app/contact/page";
@@ -569,6 +569,8 @@ export default function Home() {
           <Contact isDark={isDark} /> */}
           <SmoothScroll />
           <Skills isDark={isDark} />
+          <Journey isDark={isDark} />
+          <FeaturedWork isDark={isDark} />
           <About isDark={isDark} />
           <Contact isDark={isDark} />
           <Footer isDark={isDark} />
