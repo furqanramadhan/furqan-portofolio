@@ -5,6 +5,7 @@ import Image from "next/image";
 interface SplashScreenProps {
   onFinish?: () => void;
   onFadeStart?: () => void;
+  isDark?: boolean;
 }
 
 const accent = "var(--accent-color)";
@@ -12,6 +13,7 @@ const accent = "var(--accent-color)";
 export default function SplashScreen({
   onFinish,
   onFadeStart,
+  isDark = true,
 }: SplashScreenProps) {
   const [isFading, setIsFading] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -69,6 +71,22 @@ export default function SplashScreen({
 
   if (!isVisible) return null;
 
+  const theme = isDark
+    ? {
+        bg: "#0D0D0D",
+        text: "#C8C8C8",
+        scanline: "rgba(255,255,255,0.012)",
+        bracket: `${accent}40`,
+        status: "#444",
+      }
+    : {
+        bg: "#F5F0E8",
+        text: "#1A1A1A",
+        scanline: "rgba(0,0,0,0.012)",
+        bracket: `${accent}60`,
+        status: "#7A7060",
+      };
+
   // SVG circle params
   const size = 96;
   const strokeWidth = 2;
@@ -81,7 +99,7 @@ export default function SplashScreen({
       style={{
         position: "fixed",
         inset: 0,
-        background: "#0D0D0D",
+        background: theme.bg,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -98,8 +116,7 @@ export default function SplashScreen({
         style={{
           position: "absolute",
           inset: 0,
-          background:
-            "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.012) 2px, rgba(255,255,255,0.012) 4px)",
+          background: `repeating-linear-gradient(0deg, transparent, transparent 2px, ${theme.scanline} 2px, ${theme.scanline} 4px)`,
           pointerEvents: "none",
         }}
       />
@@ -112,8 +129,8 @@ export default function SplashScreen({
           left: 32,
           width: 32,
           height: 32,
-          borderTop: `1px solid ${accent}40`,
-          borderLeft: `1px solid ${accent}40`,
+          borderTop: `1px solid ${theme.bracket}`,
+          borderLeft: `1px solid ${theme.bracket}`,
         }}
       />
       <div
@@ -123,8 +140,8 @@ export default function SplashScreen({
           right: 32,
           width: 32,
           height: 32,
-          borderTop: `1px solid ${accent}40`,
-          borderRight: `1px solid ${accent}40`,
+          borderTop: `1px solid ${theme.bracket}`,
+          borderRight: `1px solid ${theme.bracket}`,
         }}
       />
       <div
@@ -134,8 +151,8 @@ export default function SplashScreen({
           left: 32,
           width: 32,
           height: 32,
-          borderBottom: `1px solid ${accent}40`,
-          borderLeft: `1px solid ${accent}40`,
+          borderBottom: `1px solid ${theme.bracket}`,
+          borderLeft: `1px solid ${theme.bracket}`,
         }}
       />
       <div
@@ -145,8 +162,8 @@ export default function SplashScreen({
           right: 32,
           width: 32,
           height: 32,
-          borderBottom: `1px solid ${accent}40`,
-          borderRight: `1px solid ${accent}40`,
+          borderBottom: `1px solid ${theme.bracket}`,
+          borderRight: `1px solid ${theme.bracket}`,
         }}
       />
 
@@ -214,7 +231,7 @@ export default function SplashScreen({
               width: 52,
               height: 52,
               filter: isGlitching
-                ? "grayscale(0%) contrast(150%) brightness(1.4) drop-shadow(0 0 8px #1793d1)"
+                ? `grayscale(0%) contrast(150%) brightness(1.4) drop-shadow(0 0 8px ${accent})`
                 : "grayscale(100%) contrast(125%)",
               transition: isGlitching ? "none" : "filter 0.3s ease",
               animation: isGlitching
@@ -223,7 +240,11 @@ export default function SplashScreen({
             }}
           >
             <Image
-              src="/assets/image/icons-arch-linux.png"
+              src={
+                isDark
+                  ? "/assets/image/logo/icon_dark.svg"
+                  : "/assets/image/logo/logo_light.svg"
+              }
               alt="System Logo"
               fill
               style={{ objectFit: "contain" }}
@@ -241,7 +262,7 @@ export default function SplashScreen({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              mixBlendMode: "screen",
+              mixBlendMode: isDark ? "screen" : "multiply",
             }}
           >
             <div
@@ -255,7 +276,11 @@ export default function SplashScreen({
               }}
             >
               <Image
-                src="/assets/image/icons-arch-linux.png"
+                src={
+                  isDark
+                    ? "/assets/image/logo/icon_dark.svg"
+                    : "/assets/image/logo/logo_light.svg"
+                }
                 alt=""
                 fill
                 style={{ objectFit: "contain" }}
@@ -280,7 +305,7 @@ export default function SplashScreen({
             fontSize: 22,
             fontWeight: 700,
             letterSpacing: "0.18em",
-            color: isGlitching ? "#fff" : "#C8C8C8",
+            color: isGlitching ? (isDark ? "#fff" : "#000") : theme.text,
             textTransform: "uppercase",
             position: "relative",
             transition: isGlitching ? "none" : "color 0.2s",
@@ -309,7 +334,7 @@ export default function SplashScreen({
         <div
           style={{
             fontSize: 10,
-            color: "#444",
+            color: theme.status,
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             minWidth: 200,
@@ -332,7 +357,7 @@ export default function SplashScreen({
           style={{
             width: 160,
             height: 1,
-            background: "#1e1e1e",
+            background: isDark ? "#1e1e1e" : "#E0DAD0",
             marginTop: 12,
             position: "relative",
             overflow: "hidden",

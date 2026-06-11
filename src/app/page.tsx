@@ -5,11 +5,12 @@ import SplashScreen from "@/src/components/splashSreen";
 import Header from "@/src/components/header";
 import Skills from "@/src/app/skills/page";
 import Journey from "@/src/app/journey/page";
-import FeaturedWork from "@/src/app/work/page";
+import FeaturedWork from "@/src/app/projects/page";
 import About from "@/src/app/about/page";
 import Contact from "@/src/app/contact/page";
 import Footer from "@/src/components/footer";
 import SmoothScroll from "@/src/components/smoothScroll";
+import FlashAbout from "@/src/components/flashcardImage/flashAbout";
 
 const roles = [
   "ME",
@@ -26,7 +27,7 @@ export default function Home() {
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150);
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   const [mounted, setIsMounted] = useState(false);
   const [bootLines, setBootLines] = useState<string[]>([]);
 
@@ -39,6 +40,11 @@ export default function Home() {
 
   useEffect(() => {
     setIsMounted(true);
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setIsDark(savedTheme === "dark");
+    }
+
     if (isSplashFinished) {
       let i = 0;
       const interval = setInterval(() => {
@@ -111,12 +117,22 @@ export default function Home() {
         fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
       }}
     >
-      <SplashScreen onFinish={() => setIsSplashFinished(true)} />
+      <SplashScreen
+        onFinish={() => setIsSplashFinished(true)}
+        isDark={isDark}
+      />
 
       {isSplashFinished && (
         <>
           {/* Pass isDark + setter to Header so navbar can reflect theme */}
-          <Header isDark={isDark} onToggleTheme={() => setIsDark(!isDark)} />
+          <Header
+            isDark={isDark}
+            onToggleTheme={() => {
+              const newDark = !isDark;
+              setIsDark(newDark);
+              localStorage.setItem("theme", newDark ? "dark" : "light");
+            }}
+          />
 
           {/* ── HOME SECTION ── */}
           <section

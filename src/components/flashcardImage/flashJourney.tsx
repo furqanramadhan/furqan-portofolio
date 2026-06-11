@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
 const SLIDE_DURATION = 1800;
@@ -14,7 +14,6 @@ interface FlashcardImageProps {
   alt: string;
 }
 
-/** Fisher-Yates shuffle — returns new randomised array */
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -32,80 +31,150 @@ export default function FlashcardImage({
   theme,
   alt,
 }: FlashcardImageProps) {
-  // Randomised order — stable for the lifetime of this mount
-  const shuffled = useMemo(() => shuffle(images), [images]);
+  const total = images.length;
 
+  // ── Queue ref — mutated imperatively, never read during render ──────────
+  const queueRef = useRef<number[]>([]);
+
+  /**
+   * Pop the next index from the queue, guaranteed != excludeCurrent.
+   * Refills via a fresh shuffle when empty.
+   * Returns a tuple: [nextIndex, snapshot of next two queue items for stack]
+   */
+  const popNext = (excludeCurrent: number): [number, [number, number]] => {
+    const refill = () => {
+      let batch = shuffle(
+        [...Array(total).keys()].filter((i) => i !== excludeCurrent),
+      );
+      // Extra guard: ensure first item of new batch != excludeCurrent (already filtered, but be safe)
+      queueRef.current = batch;
+    };
+
+    if (queueRef.current.length === 0) refill();
+
+    // Pop
+    let next = queueRef.current.shift()!;
+
+    // Safety: if somehow same, swap with next in line or refill
+    if (next === excludeCurrent) {
+      if (queueRef.current.length === 0) refill();
+      const swap = queueRef.current.shift()!;
+      queueRef.current.unshift(next);
+      next = swap;
+    }
+
+    // Snapshot stack indices from queue AFTER popping `next`
+    // These will become the new stack display, synced in the same setState batch
+    const s0 = queueRef.current[0] ?? (next + 1) % total;
+    const s1 = queueRef.current[1] ?? (next + 2) % total;
+
+    return [next, [s0, s1]];
+  };
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // ── All display state in one place ───────────────────────────────────────
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [nextIdx, setNextIdx] = useState(1 % shuffled.length);
+  const [nextIdx, setNextIdx] = useState(1 % total);
+  const [stackIdxs, setStackIdxs] = useState<[number, number]>([
+    1 % total,
+    2 % total,
+  ]);
   const [sliding, setSliding] = useState(false);
   const [slideDir, setSlideDir] = useState<"left" | "right">("left");
-
-  // Stack stays visible always — just animate differently on hover
   const [stackVisible, setStackVisible] = useState(true);
 
+  // timerRef    — outer delay before a slide begins
+  // transitionRef — inner animation duration (slides the image)
+  // Both must be cancelled on leave to prevent stale state updates
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const total = shuffled.length;
+  const transitionRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Advance carousel while hovered
+  const clearAllTimers = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    if (transitionRef.current) {
+      clearTimeout(transitionRef.current);
+      transitionRef.current = null;
+    }
+  };
+
+  // Seed queue on mount
+  useEffect(() => {
+    queueRef.current = shuffle([...Array(total).keys()].filter((i) => i !== 0));
+  }, [images]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Slide cycle — fires when hovered, resets on currentIdx change ────────
   useEffect(() => {
     if (!isHovered) return;
 
     timerRef.current = setTimeout(() => {
-      // Pick random next index that is different from current
-      let randomNext: number;
-      do {
-        randomNext = Math.floor(Math.random() * total);
-      } while (randomNext === currentIdx && total > 1);
-
-      // Randomly decide slide direction for variety
       const dir = Math.random() > 0.5 ? "left" : "right";
+      const [randomNext, newStackIdxs] = popNext(currentIdx);
+
       setSlideDir(dir);
       setNextIdx(randomNext);
-      setStackVisible(false); // briefly hide stack during slide
-
+      setStackVisible(false);
       setSliding(true);
-      setTimeout(() => {
+
+      // ✅ Stored in ref so it can be cancelled if user leaves mid-transition
+      transitionRef.current = setTimeout(() => {
         setCurrentIdx(randomNext);
+        setStackIdxs(newStackIdxs);
         setSliding(false);
-        setStackVisible(true); // restore stack after slide settles
+        setStackVisible(true);
       }, TRANSITION_MS);
     }, SLIDE_DURATION);
 
     return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
     };
-  }, [isHovered, currentIdx, total]);
+  }, [isHovered, currentIdx]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Reset on mouse-leave
+  // ── Reset to first image on mouse leave ──────────────────────────────────
   useEffect(() => {
-    if (!isHovered) {
-      const t = setTimeout(() => {
-        setCurrentIdx(0);
-        setStackVisible(true);
-      }, 200);
-      return () => clearTimeout(t);
-    }
-  }, [isHovered]);
+    if (isHovered) return;
 
-  // Slide-out transform for current image
+    // Cancel both timers immediately — no stale update can fire after this
+    clearAllTimers();
+
+    const t = setTimeout(() => {
+      const fresh = shuffle([...Array(total).keys()].filter((i) => i !== 0));
+      queueRef.current = fresh;
+
+      // ✅ nextIdx reset alongside currentIdx — no stale frame on next hover
+      setCurrentIdx(0);
+      setNextIdx(fresh[0] ?? 1 % total);
+      setStackIdxs([fresh[0] ?? 1 % total, fresh[1] ?? 2 % total]);
+      setSliding(false);
+      setStackVisible(true);
+    }, 200);
+
+    return () => clearTimeout(t);
+  }, [isHovered]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Slide transform helpers ───────────────────────────────────────────────
   const currentOut = sliding
     ? slideDir === "left"
       ? "translateX(-105%)"
       : "translateX(105%)"
     : "translateX(0%)";
 
-  // Slide-in transform for next image
   const nextIn = sliding
     ? "translateX(0%)"
     : slideDir === "left"
       ? "translateX(105%)"
       : "translateX(-105%)";
 
-  // Background stack cards (indices offset from current)
-  const stackOffsets = [
-    { imgOffset: 2, rotate: 2.8, top: -7, hPad: 10, opacity: 0.25, zIndex: 0 },
-    { imgOffset: 1, rotate: -1.6, top: -4, hPad: 5, opacity: 0.35, zIndex: 1 },
-  ];
+  // ── Stack visual config (purely presentational) ───────────────────────────
+  const stackConfig = [
+    { rotate: 2.8, top: -7, hPad: 10, opacity: 0.25, zIndex: 0 },
+    { rotate: -1.6, top: -4, hPad: 5, opacity: 0.35, zIndex: 1 },
+  ] as const;
 
   return (
     <div
@@ -116,8 +185,8 @@ export default function FlashcardImage({
         marginBottom: 16,
       }}
     >
-      {/* ── Stacked background cards ── */}
-      {stackOffsets.map((s, i) => (
+      {/* ── Stack cards — uses stackIdxs state, NOT queueRef ── */}
+      {stackConfig.map((s, i) => (
         <div
           key={i}
           style={{
@@ -129,12 +198,11 @@ export default function FlashcardImage({
             border: `1px solid ${theme.border}`,
             background: isDark ? "#0a0a0a" : "#E0DAD0",
             transform: isHovered
-              ? // flatten toward main card while hovered but keep visible
-                `rotate(${s.rotate * 0.3}deg) translateY(${-s.top * 0.3}px)`
+              ? `rotate(${s.rotate * 0.3}deg) translateY(${-s.top * 0.3}px)`
               : `rotate(${s.rotate}deg)`,
             zIndex: s.zIndex,
             overflow: "hidden",
-            transition: `transform 0.4s ease, opacity 0.3s ease`,
+            transition: "transform 0.4s ease, opacity 0.3s ease",
             opacity: stackVisible
               ? isHovered
                 ? s.opacity * 0.6
@@ -144,12 +212,13 @@ export default function FlashcardImage({
           }}
         >
           <Image
-            src={shuffled[(currentIdx + s.imgOffset) % total]}
+            src={images[stackIdxs[i]]}
             alt=""
             fill
+            sizes="(max-width: 768px) 100vw, 280px"
             style={{
               objectFit: "cover",
-              objectPosition: "center center",
+              objectPosition: "center",
               opacity: 0.5,
               filter: "grayscale(70%)",
             }}
@@ -167,7 +236,6 @@ export default function FlashcardImage({
           zIndex: 2,
           background: isDark ? "#080808" : "#f0ece4",
           transition: "border-color 0.3s ease",
-          // subtle lift on hover
           transform: isHovered
             ? "scale(1.015) translateY(-2px)"
             : "scale(1) translateY(0px)",
@@ -186,12 +254,13 @@ export default function FlashcardImage({
           }}
         >
           <Image
-            src={shuffled[currentIdx]}
+            src={images[currentIdx]}
             alt={alt}
             fill
+            sizes="(max-width: 768px) 100vw, 280px"
             style={{
               objectFit: "cover",
-              objectPosition: "center center",
+              objectPosition: "center",
               filter:
                 isHovered || isActive
                   ? "brightness(0.88) contrast(1.08)"
@@ -216,18 +285,19 @@ export default function FlashcardImage({
           }}
         >
           <Image
-            src={shuffled[nextIdx]}
+            src={images[nextIdx]}
             alt={alt}
             fill
+            sizes="(max-width: 768px) 100vw, 280px"
             style={{
               objectFit: "cover",
-              objectPosition: "center center",
+              objectPosition: "center",
               filter: "brightness(0.88) contrast(1.08)",
             }}
           />
         </div>
 
-        {/* Scanline */}
+        {/* Scanline overlay */}
         <div
           style={{
             position: "absolute",
@@ -241,6 +311,7 @@ export default function FlashcardImage({
         {/* Progress bar */}
         {isHovered && (
           <div
+            key={`prog-${currentIdx}`}
             style={{
               position: "absolute",
               bottom: 0,
@@ -251,11 +322,10 @@ export default function FlashcardImage({
               animation: `imgProgress ${SLIDE_DURATION}ms linear`,
               boxShadow: "0 0 6px var(--accent-color)",
             }}
-            key={`prog-${currentIdx}`}
           />
         )}
 
-        {/* Counter */}
+        {/* Counter badge */}
         <div
           style={{
             position: "absolute",

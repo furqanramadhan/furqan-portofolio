@@ -49,8 +49,8 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/icon.png",
-    apple: "/icon.png",
+    icon: "/assets/image/logo/icon_dark.svg",
+    apple: "/assets/image/logo/icon_dark.svg",
   },
   verification: {
     google: "QNRD12HvAn5I9ktIjolB89WybBWKxDCOY1wWT3tiNc8", // You might want to update this later

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import FlashcardImage from "@/src/components/flashcardImage";
+import FlashcardImage from "@/src/components/flashcardImage/flashJourney";
 
 interface JourneyProps {
   isDark?: boolean;
@@ -19,8 +19,9 @@ const items = [
     gpa: "3.51 / 4.0",
     tags: ["Computer Science", "GPA 3.51"],
     desc: "Pursuing a degree in Informatics at the Faculty of Mathematics and Natural Sciences.",
-    images: [1, 5, 6, 7, 8, 9].map(
-      (n) => `/assets/image/selected portofolio/kuliah/kuliah${n}.webp`,
+    images: Array.from(
+      { length: 8 },
+      (_, i) => `/assets/image/selected portofolio/kuliah/kuliah${i + 1}.webp`,
     ),
   },
   {

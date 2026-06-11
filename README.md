@@ -1,47 +1,50 @@
-# 🚀 Kelfino's Portfolio
+# 🚀 Furqan's Portfolio
 
-![Portfolio Preview](/public/assets/image/landingpage.png)
+![Portfolio Preview](/public/assets/image/home/home-1.jpeg)
 
-Welcome to my personal portfolio repository! This website is designed to showcase my projects, professional journey, and technical skills as a **Computer Science Student** and **Full Stack Developer**.
+Welcome to my personal portfolio repository! This website is designed to showcase my projects, professional journey, and technical skills as an **Informatics Student** and **Frontend Developer**.
 
-🔗 **Live Demo:** [https://kelfino.my.id](https://kelfino.my.id)
+🔗 **Live Demo:** [https://furqanramadhan.com](https://furqanramadhan.com)
 
 ## 🛠️ Tech Stack
 
 This project is built using modern web technologies:
 
-* **Framework:** [Next.js 14](https://nextjs.org/) (App Router)
-* **Language:** TypeScript
-* **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-* **Icons:** Font Awesome & Next/Image
-* **Form Handling:** Web3Forms (Serverless contact form)
-* **Deployment:** Vercel
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router)
+- **Language:** TypeScript
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) & Local CSS Modules
+- **Animations:** Shuffled Deck Logic (Batch Queue), SVG Filters, and Framer-like transitions
+- **Icons:** Font Awesome, DevIcons, and Custom SVGs
+- **Deployment:** Vercel
 
 ## ✨ Features
 
-* **Responsive Design:** Looks great on desktop, tablet, and mobile.
-* **Custom Animations:** Smooth scroll reveals and fade effects using Tailwind.
-* **Interactive Timeline:** A "Journey" section detailing my transition from creative media to tech.
-* **Project Showcase:** Grid layout for featured works with modal/details support.
-* **Working Contact Form:** Direct email notifications without a backend server.
-* **Dark Mode UI:** Sleek dark-themed interface with Red accent (`#B22222`).
+- **Cyber-Terminal Aesthetic:** Monospaced typography and scanline effects for a technical vibe.
+- **Smart Image Animations:** Custom "Shuffled Deck" algorithm ensures image variety without repetitive sequences in galleries.
+- **Persistent Theme Engine:** Seamless transition between Dark and Light mode with local storage persistence to prevent flash.
+- **High-Fidelity Projects Grid:** Responsive Bento-style grid with optimized hover states and performant image loading.
+- **Interactive Journey:** Horizontal scrolling timeline detailing education and professional experience.
+- **Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop with specific breakpoints for complex UI elements.
 
 ## 🏃‍♂️ Running Locally
 
 Want to see the code in action? Follow these steps:
 
 1.  **Clone the repository:**
+
     ```bash
-    git clone [https://github.com/kelfinofarelino/my-portfolio.git](https://github.com/kelfinofarelino/my-portfolio.git)
+    git clone https://github.com/furqanramadhan/furqan-portofolio.git
     ```
 
 2.  **Install dependencies:**
+
     ```bash
-    cd my-portfolio
-    npm install
+    cd furqan-portofolio
+    npm install # or pnpm install / yum install
     ```
 
 3.  **Run the development server:**
+
     ```bash
     npm run dev
     ```
@@ -51,7 +54,10 @@ Want to see the code in action? Follow these steps:
 ## 📂 Project Structure
 
 ```bash
-├── app/                # Next.js App Router (Pages & Layout)
-├── components/         # Reusable UI Components (Header, Hero, About, etc.)
-├── public/             # Static assets (Images, Logos)
-└── tailwind.config.ts  # Tailwind configuration
+├── src/
+│   ├── app/                # Next.js App Router (Pages & Layout)
+│   ├── components/         # High-fidelity UI Components
+│   └── styles/             # Global and modular CSS
+├── public/                 # Static assets (Optimized .webp images & SVGs)
+└── tailwind.config.ts      # Tailwind configuration
+```

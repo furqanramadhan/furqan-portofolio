@@ -8,7 +8,7 @@ export const projects = [
     role: "Backend Developer",
     org: "TDMRC USK",
     year: "2025",
-    img: "/assets/image/projects/zonapetik.png",
+    img: "/assets/image/projects/project1.webp",
     desc: "Built a smart rice planting calendar predicting optimal schedules from climate time-series data. Deployed and used by local agricultural stakeholders in Aceh Besar to reduce crop failure risk.",
     tech: ["Next.js", "TypeScript", "MongoDB", "Flask", "Scikit-Learn"],
     linkCode: null,
@@ -22,7 +22,7 @@ export const projects = [
     role: "Mobile Developer",
     org: "Bangkit Academy",
     year: "2024",
-    img: "/assets/image/projects/signmate.png",
+    img: "/assets/image/projects/project2.webp",
     desc: "Built an Android app using Kotlin to bridge communication for the deaf and hard of hearing. Delivered Sign Language Dictionary with camera support and Quiz Practice feature in a cross-functional team (Mobile, ML, Cloud).",
     tech: ["Kotlin", "Android", "ML", "Cloud"],
     linkCode: "https://github.com/furqanramadhan/SignMate-C241-PS262",
@@ -36,7 +36,7 @@ export const projects = [
     role: "Backend Developer",
     org: "Team Project",
     year: "2023",
-    img: "/assets/image/projects/capytype.png",
+    img: "/assets/image/projects/project3.webp",
     desc: "Built a typing test platform measuring WPM, CPM, and accuracy across timed and untimed modes. Implemented user authentication and leaderboard system to store and rank results across users.",
     tech: ["Laravel", "MySQL", "JavaScript"],
     linkCode: "https://github.com/EKIZAMANI/CapyDEV_final_project",
@@ -206,7 +206,7 @@ export function ProjectModal({
         </div>
 
         {/* Content */}
-        <div style={{ padding: "24px 24px 28px" }}>
+        <div className="project-modal-content" style={{ padding: "24px 24px 28px" }}>
           {/* Header */}
           <div style={{ marginBottom: 20 }}>
             <div
@@ -288,15 +288,17 @@ export function ProjectModal({
           </div>
 
           {/* Links */}
-          <div style={{ display: "flex", gap: 10 }}>
+          <div className="modal-links" style={{ display: "flex", gap: 10 }}>
             {project.linkLive && (
               <a
                 href={project.linkLive}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="modal-link-btn primary"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
+                  justifyContent: "center",
                   gap: 8,
                   padding: "10px 18px",
                   border: "1px solid var(--accent-color)",
@@ -306,17 +308,6 @@ export function ProjectModal({
                   textDecoration: "none",
                   transition: "all 0.2s",
                   background: "transparent",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.background =
-                    "var(--accent-color)";
-                  (e.currentTarget as HTMLAnchorElement).style.color = "#000";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.background =
-                    "transparent";
-                  (e.currentTarget as HTMLAnchorElement).style.color =
-                    "var(--accent-color)";
                 }}
               >
                 <i
@@ -331,9 +322,11 @@ export function ProjectModal({
                 href={project.linkCode}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="modal-link-btn secondary"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
+                  justifyContent: "center",
                   gap: 8,
                   padding: "10px 18px",
                   border: `1px solid ${theme.border}`,
@@ -344,18 +337,6 @@ export function ProjectModal({
                   transition: "all 0.2s",
                   background: "transparent",
                 }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                    "var(--accent-color)";
-                  (e.currentTarget as HTMLAnchorElement).style.color =
-                    "var(--accent-color)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                    theme.border;
-                  (e.currentTarget as HTMLAnchorElement).style.color =
-                    theme.textMuted;
-                }}
               >
                 <i className="fab fa-github" style={{ fontSize: 11 }} />{" "}
                 ./view_code.sh
@@ -364,6 +345,27 @@ export function ProjectModal({
           </div>
         </div>
       </div>
+      <style>{`
+        .modal-link-btn.primary:hover {
+          background: var(--accent-color) !important;
+          color: #000 !important;
+        }
+        .modal-link-btn.secondary:hover {
+          border-color: var(--accent-color) !important;
+          color: var(--accent-color) !important;
+        }
+        @media (max-width: 768px) {
+          .modal-links {
+            flex-direction: column;
+          }
+          .modal-link-btn {
+            width: 100%;
+          }
+          .project-modal-content {
+             padding: 18px 18px 24px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
