@@ -1,6 +1,6 @@
 # 🚀 Furqan's Portfolio
 
-![Portfolio Preview](/public/assets/image/home/loading-screen.png)
+![Portfolio Preview]
 
 Welcome to my personal portfolio repository! This website is designed to showcase my projects, professional journey, and technical skills as an **Informatics Student** and **Frontend Developer**.
 
