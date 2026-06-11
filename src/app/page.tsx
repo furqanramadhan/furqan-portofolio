@@ -34,7 +34,7 @@ export default function Home() {
   const bootSequence = [
     "$ initializing portfolio.sh...",
     "$ loading modules: [react] [next] [typescript]",
-    "$ connecting to furqan.dev...",
+    "$ connecting to furqanramadhan.xyz...",
     "$ STATUS: online — welcome.",
   ];
 
@@ -167,7 +167,7 @@ export default function Home() {
                 zIndex: 2,
               }}
             >
-              <div>┌─[ furqan.dev ]</div>
+              <div>┌─[ furqanramadhan.xyz ]</div>
               <div>│</div>
             </div>
             <div

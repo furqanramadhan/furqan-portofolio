@@ -13,7 +13,7 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://furqanramadhan.com"), // Update with your actual domain later
+  metadataBase: new URL("https://furqanramadhan.xyz"),
   title: {
     default: "Furqan Ramadhan | Portfolio",
     template: "%s | Furqan Ramadhan",

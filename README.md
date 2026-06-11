@@ -1,63 +1,105 @@
-# 🚀 Furqan's Portfolio
+# 🚀 Furqan Ramadhan — Personal Portfolio
 
-![Portfolio Preview]
+A modern portfolio website built with Next.js, showcasing selected projects, technical skills, academic experiences, and professional journey.
 
-Welcome to my personal portfolio repository! This website is designed to showcase my projects, professional journey, and technical skills as an **Informatics Student** and **Frontend Developer**.
+The project focuses on responsive design, performance optimization, and custom interactive UI components while maintaining a clean developer-oriented aesthetic.
 
-🔗 **Live Demo:** [https://furqanramadhan.com](https://furqanramadhan.com)
+🌐 **Live Website:** https://furqanramadhan.com
 
-## 🛠️ Tech Stack
+---
 
-This project is built using modern web technologies:
+## 🛠 Tech Stack
 
-- **Framework:** [Next.js 15](https://nextjs.org/) (App Router)
+- **Framework:** Next.js 15 (App Router)
 - **Language:** TypeScript
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/) & Local CSS Modules
-- **Animations:** Shuffled Deck Logic (Batch Queue), SVG Filters, and Framer-like transitions
-- **Icons:** Font Awesome, DevIcons, and Custom SVGs
+- **Styling:** Tailwind CSS
+- **Icons:** Font Awesome & DevIcons
 - **Deployment:** Vercel
+
+---
 
 ## ✨ Features
 
-- **Cyber-Terminal Aesthetic:** Monospaced typography and scanline effects for a technical vibe.
-- **Smart Image Animations:** Custom "Shuffled Deck" algorithm ensures image variety without repetitive sequences in galleries.
-- **Persistent Theme Engine:** Seamless transition between Dark and Light mode with local storage persistence to prevent flash.
-- **High-Fidelity Projects Grid:** Responsive Bento-style grid with optimized hover states and performant image loading.
-- **Interactive Journey:** Horizontal scrolling timeline detailing education and professional experience.
-- **Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop with specific breakpoints for complex UI elements.
+- Responsive Bento-style project showcase
+- Interactive education and experience timeline
+- Custom shuffled image deck animation with non-repetitive sequences
+- Persistent dark/light theme system
+- Optimized image loading with Next.js Image
+- Mobile-first responsive layouts
+- SEO-friendly App Router architecture
+- Smooth transitions and lightweight UI interactions
 
-## 🏃‍♂️ Running Locally
+---
 
-Want to see the code in action? Follow these steps:
+## 🏃 Running Locally
 
-1.  **Clone the repository:**
+### Clone the repository
 
-    ```bash
-    git clone https://github.com/furqanramadhan/furqan-portofolio.git
-    ```
+```bash
+git clone https://github.com/furqanramadhan/furqan-portofolio.git
+cd furqan-portofolio
+```
 
-2.  **Install dependencies:**
+### Install dependencies
 
-    ```bash
-    cd furqan-portofolio
-    npm install # or pnpm install / yum install
-    ```
+```bash
+pnpm install
+```
 
-3.  **Run the development server:**
+### Start development server
 
-    ```bash
-    npm run dev
-    ```
+```bash
+pnpm dev
+```
 
-4.  Open [http://localhost:3000](http://localhost:3000) with your browser.
+Open your browser and visit:
+
+```text
+http://localhost:3000
+```
+
+---
 
 ## 📂 Project Structure
 
 ```bash
+.
+├── public/
+│   └── assets/
+│
 ├── src/
-│   ├── app/                # Next.js App Router (Pages & Layout)
-│   ├── components/         # High-fidelity UI Components
-│   └── styles/             # Global and modular CSS
-├── public/                 # Static assets (Optimized .webp images & SVGs)
-└── tailwind.config.ts      # Tailwind configuration
+│   ├── app/
+│   │
+│   └── components/
+│
+├── next.config.ts
+├── tailwind.config.ts
+├── tsconfig.json
+└── package.json
 ```
+
+---
+
+## ⚡ Performance Notes
+
+This portfolio includes several custom optimizations:
+
+- Batch-based image shuffle algorithm to avoid repetitive image sequences
+- Responsive image sizing and lazy loading
+- Theme persistence to prevent hydration flash
+- Lightweight animation system without heavy dependencies
+- Optimized layouts for desktop, tablet, and mobile devices
+
+---
+
+## 🚀 Deployment
+
+The project is deployed on Vercel and automatically updated through the main branch.
+
+**Production URL:** https://furqanramadhan.com
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.

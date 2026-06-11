@@ -315,7 +315,7 @@ export default function SplashScreen({
             animation: isGlitching ? "glitchShake 0.08s ease infinite" : "none",
           }}
         >
-          FURQAN<span style={{ color: accent }}>.DEV</span>
+          FURQAN<span style={{ color: accent }}>R</span>
         </div>
 
         {/* Progress number */}
